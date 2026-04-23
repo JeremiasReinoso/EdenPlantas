@@ -391,7 +391,7 @@ img {
 }
 
 .section {
-  padding: 4.2rem 0;
+  padding: 5rem 0;
 }
 
 .container {
@@ -429,7 +429,7 @@ img {
 }
 
 .section-head {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.2rem;
 }
 
 .section-head h2 {
@@ -444,12 +444,12 @@ img {
 .benefit-grid,
 .contact-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.8rem;
 }
 
 .categories-stack {
   display: grid;
-  gap: 1.2rem;
+  gap: 2rem;
 }
 
 .category-block {
@@ -706,7 +706,7 @@ img {
 
 .contact-meta-grid {
   display: grid;
-  gap: 0.8rem;
+  gap: 1.2rem;
 }
 
 .contact-meta-card {
