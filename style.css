@@ -182,6 +182,13 @@ img {
   letter-spacing: 0.06em;
 }
 
+.brand-logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 .menu-btn {
   border: 0;
   background: transparent;
