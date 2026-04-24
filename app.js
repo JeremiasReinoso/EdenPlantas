@@ -5,18 +5,12 @@ const themeToggle = document.querySelector("#themeToggle");
 const revealItems = document.querySelectorAll(".reveal");
 const parallaxLayers = document.querySelectorAll(".parallax-layer");
 const rippleButtons = document.querySelectorAll(".ripple-btn");
-const introScreen = document.querySelector("#introScreen");
 const cursorGlow = document.querySelector("#cursorGlow");
 const adviceOptions = document.querySelectorAll(".advice-option");
 const adviceSubmit = document.querySelector("#adviceSubmit");
 const storeStatus = document.querySelector("#storeStatus");
 
-// Intro animada
-window.addEventListener("load", () => {
-  window.setTimeout(() => {
-    if (introScreen) introScreen.classList.add("is-hidden");
-  }, 2200);
-});
+// La intro animada (loader con enredadera) es manejada por loader.js
 
 // Toggle manual + persistencia de tema
 if (themeToggle) {
