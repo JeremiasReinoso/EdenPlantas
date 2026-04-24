@@ -17,25 +17,60 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <!-- ✅ NUEVO: Estilos del carrito -->
   <link rel="stylesheet" href="cart.css" />
+  <link rel="stylesheet" href="loader.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 <body>
-  <div class="intro-screen" id="introScreen" aria-hidden="true">
-    <div class="intro-leaves">
-      <svg class="intro-leaf intro-leaf-1" viewBox="0 0 120 120"><path d="M108 14C55 19 21 49 12 105c58-9 87-43 96-91z"/></svg>
-      <svg class="intro-leaf intro-leaf-2" viewBox="0 0 120 120"><path d="M104 15C52 23 25 52 16 106c55-6 86-37 88-91z"/></svg>
-      <svg class="intro-leaf intro-leaf-3" viewBox="0 0 120 120"><path d="M101 18C48 25 19 59 16 110c58-6 87-40 85-92z"/></svg>
+  <div class="loader" id="loader" aria-live="polite" aria-label="Cargando sitio">
+    <div class="vine-wrap">
+      <div class="stem stem-main"></div>
+      <div class="branch branch-left-1">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-a leaf-sway"></div>
+        <div class="flower flower-a"></div>
+      </div>
+      <div class="branch branch-right-1">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-b leaf-sway-alt"></div>
+      </div>
+      <div class="branch branch-left-2">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-c leaf-sway"></div>
+        <div class="leaf leaf-d leaf-sway-alt"></div>
+      </div>
+      <div class="branch branch-right-2">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-e leaf-sway"></div>
+        <div class="flower flower-b"></div>
+      </div>
+      <div class="branch branch-left-3">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-f leaf-sway-alt"></div>
+      </div>
+      <div class="branch branch-right-3">
+        <div class="stem stem-branch"></div>
+        <div class="leaf leaf-g leaf-sway"></div>
+        <div class="flower flower-c"></div>
+      </div>
+      <div class="tendril tendril-1"></div>
+      <div class="tendril tendril-2"></div>
+      <div class="tendril tendril-3"></div>
     </div>
-    <p class="intro-brand">Eden Plantas</p>
+    <div class="loader-text-wrap">
+      <p class="loader-label">Cargando</p>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loaderBar"></div>
+      </div>
+      <span class="loader-pct" id="loaderPct">0%</span>
+    </div>
   </div>
 
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
   <header class="site-header">
     <a href="#inicio" class="brand">
-      <img src="Logo Eden Plantas.png" alt="Eden Plantas Logo" class="brand-logo">
+      <img src="Lgo eden plantas .jpeg" alt="Eden Plantas Logo" class="brand-logo">
     </a>
     <button class="menu-btn" aria-expanded="false" aria-label="Abrir menu">
       <span></span><span></span>
@@ -325,7 +360,7 @@
 </footer>
 
   <script src="app.js"></script>
-  <!-- ✅ NUEVO: Lógica del carrito (siempre después de app.js) -->
   <script src="cart.js"></script>
+  <script src="loader.js"></script>
 </body>
 </html>
