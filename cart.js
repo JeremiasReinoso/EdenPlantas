@@ -171,28 +171,6 @@ function renderCartPanel() {
       </button>
     `;
     list.appendChild(li);
-  });
-
-  if (totalEl) totalEl.textContent = formatPrice(getTotalPrice());
-}
-
-/**
- * Actualiza todo el UI del carrito: badge + panel.
- */
-function updateCartUI() {
-  updateBadge();
-  renderCartPanel();
-}
-
-/**
- * Abre el panel lateral del carrito.
- */
-function openCartPanel() {
-  const panel = document.getElementById("cartPanel");
-  const overlay = document.getElementById("cartOverlay");
-  panel?.classList.add("open");
-  overlay?.classList.add("visible");
-  document.body.style.overflow = "hidden";
 }
 
 /**
