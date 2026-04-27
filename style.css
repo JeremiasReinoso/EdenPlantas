@@ -983,7 +983,7 @@ img {
   border: none;
   cursor: pointer;
   padding: 0.4rem;
-  color: var(--text, #e8f5e9);
+  color: #ffffff;
   transition: color 0.2s ease, transform 0.2s ease;
   margin-left: 0.25rem;
 }
@@ -995,7 +995,7 @@ img {
 }
 
 .cart-icon-btn:hover {
-  color: var(--accent, #39ff14);
+  color: #ffffff;
   transform: scale(1.1);
 }
 
