@@ -171,6 +171,20 @@ function renderCartPanel() {
       </button>
     `;
     list.appendChild(li);
+  });
+
+  if (totalEl) totalEl.textContent = formatPrice(getTotalPrice());
+}
+
+/**
+ * Abre el panel lateral del carrito.
+ */
+function openCartPanel() {
+  const panel = document.getElementById("cartPanel");
+  const overlay = document.getElementById("cartOverlay");
+  panel?.classList.add("open");
+  overlay?.classList.add("visible");
+  document.body.style.overflow = "hidden";
 }
 
 /**
@@ -222,9 +236,8 @@ function injectCartUI() {
       </svg>
       <span class="cart-badge" id="cartBadge" style="display:none">0</span>
     `;
-    // Insertar antes del theme-toggle si existe
-    const themeBtn = nav.querySelector(".theme-toggle");
-    themeBtn ? nav.insertBefore(cartBtn, themeBtn) : nav.appendChild(cartBtn);
+    // Insertar al final del navbar
+    nav.appendChild(cartBtn);
   }
 
   // Panel lateral
