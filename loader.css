@@ -1,492 +1,265 @@
-/* ════════════════════════════════════════════════════
-   loader.css — Pantalla de carga con enredadera
-   ════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   loader.css — Pantalla de carga: enredadera pantalla completa
+   ═══════════════════════════════════════════════════════ */
 
 :root {
-  --loader-bg:       #06110a;
-  --vine-color:      #4dff7f;
-  --vine-dark:       #2d9e54;
-  --leaf-color:      #39cc62;
-  --leaf-dark:       #1a7a3a;
-  --leaf-light:      #8dffa8;
-  --flower-color:    #f9c74f;
-  --flower-center:   #f77f00;
-  --tendril-color:   #4dff7f;
-  --text-color:      #4dff7f;
-  --bar-bg:          rgba(77,255,127,0.12);
-  --bar-fill:        #4dff7f;
-  --glow:            rgba(77,255,127,0.45);
-  --duration-stem:   1.4s;
-  --duration-branch: 0.8s;
-  --duration-leaf:   0.5s;
-  --duration-sway:   3.2s;
+  --lb:    #04150a;
+  --vc:    #3dda66;
+  --vd:    #1a6b35;
+  --ll:    #9fffc0;
+  --fc:    #f9c74f;
+  --fce:   #f77f00;
+  --tx:    #3dda66;
+  --glow:  rgba(61,218,102,0.55);
+  --glowf: rgba(61,218,102,0.10);
 }
 
 [data-theme="light"] {
-  --loader-bg:    #f0f7f1;
-  --vine-color:   #3a7d44;
-  --vine-dark:    #2d5f35;
-  --leaf-color:   #5aab63;
-  --leaf-dark:    #3a7d44;
-  --leaf-light:   #8ed49a;
-  --tendril-color:#7ac87f;
-  --text-color:   #2d5f35;
-  --bar-bg:       rgba(58,125,68,0.15);
-  --bar-fill:     #3a7d44;
-  --glow:         rgba(58,125,68,0.25);
+  --lb:    #edf7ee;
+  --vc:    #2d7a3a;
+  --vd:    #1a5226;
+  --ll:    #7dc98a;
+  --tx:    #1a5226;
+  --glow:  rgba(45,122,58,0.4);
+  --glowf: rgba(45,122,58,0.08);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ─── LOADER CONTAINER ──────────────────────────── */
-.loader {
+/* ── CONTENEDOR ─────────────────────────────────────── */
+#loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
+  background: var(--lb);
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
-  background: var(--loader-bg);
-  transition: opacity 0.75s ease, visibility 0.75s ease;
-  overflow: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
 }
 
-.loader.is-done {
+#loader.is-done {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-/* ─── FONDO: PARTÍCULAS FLOTANTES ───────────────── */
-.loader::before {
-  content: '';
+/* ── SVG DE ENREDADERA (ocupa toda la pantalla) ─────── */
+#vine-svg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(77,255,127,0.06) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(77,255,127,0.04) 0%, transparent 50%);
-  animation: bgPulse 4s ease-in-out infinite alternate;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
   pointer-events: none;
 }
 
-@keyframes bgPulse {
-  from { opacity: 0.6; }
-  to   { opacity: 1; }
+/* Paths animados con stroke-dashoffset */
+.vp {
+  fill: none;
+  stroke: var(--vc);
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-/* Partículas flotantes con CSS puro */
-.loader::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
-    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
-    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
-    radial-gradient(circle, var(--vine-color) 1.5px, transparent 1.5px),
-    radial-gradient(circle, var(--vine-color) 1px, transparent 1px);
-  background-size: 200px 200px, 180px 180px, 220px 220px, 160px 160px, 240px 240px;
-  background-position: 10% 20%, 80% 60%, 40% 80%, 65% 15%, 25% 70%;
-  opacity: 0.2;
-  animation: particleFloat 6s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes particleFloat {
-  from { transform: translateY(0px) translateX(0px); }
-  to   { transform: translateY(-18px) translateX(8px); }
-}
-
-/* ─── VINE WRAPPER ──────────────────────────────── */
-.vine-wrap {
-  position: relative;
-  width: 120px;
-  height: 280px;
-  filter: drop-shadow(0 0 12px var(--glow));
-  animation: vineGlow 2.5s ease-in-out infinite alternate;
-  animation-delay: 2s;
-}
-
-@keyframes vineGlow {
-  from { filter: drop-shadow(0 0 8px var(--glow)); }
-  to   { filter: drop-shadow(0 0 22px var(--glow)) drop-shadow(0 0 40px rgba(77,255,127,0.15)); }
-}
-
-/* ─── TALLO PRINCIPAL ───────────────────────────── */
-.stem-main {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 0;
-  background: linear-gradient(to top, var(--vine-dark), var(--vine-color));
-  border-radius: 3px;
-  transform-origin: bottom center;
-  animation: growStem var(--duration-stem) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  box-shadow: 0 0 10px rgba(77,255,127,0.4), 0 0 20px rgba(77,255,127,0.15);
-}
-
-@keyframes growStem {
-  0%   { height: 0; }
-  100% { height: 100%; }
-}
-
-/* ── Pulso de luz que sube por el tallo ── */
-.stem-main::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  height: 30px;
-  background: linear-gradient(to top, transparent, rgba(255,255,255,0.5), transparent);
-  border-radius: 3px;
-  animation: sap 2s ease-in-out infinite;
-  animation-delay: 1.8s;
-}
-
-@keyframes sap {
-  0%   { bottom: 0%;  opacity: 0; }
-  10%  { opacity: 0.8; }
-  90%  { opacity: 0.6; }
-  100% { bottom: 100%; opacity: 0; }
-}
-
-/* ─── RAMAS ─────────────────────────────────────── */
-.branch {
-  position: absolute;
-  left: 50%;
-}
-
-.branch-left-1  { bottom: 72%; }
-.branch-right-1 { bottom: 60%; }
-.branch-left-2  { bottom: 47%; }
-.branch-right-2 { bottom: 34%; }
-.branch-left-3  { bottom: 20%; }
-.branch-right-3 { bottom: 8%;  }
-
-.stem-branch {
-  position: absolute;
-  top: 0;
-  height: 5px;
-  width: 0;
-  background: var(--vine-color);
-  border-radius: 0 3px 3px 0;
-  transform-origin: left center;
-}
-
-.branch-left-1  .stem-branch,
-.branch-left-2  .stem-branch,
-.branch-left-3  .stem-branch {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-  transform-origin: right center;
-  animation: growBranchLeft var(--duration-branch) ease forwards;
-}
-
-.branch-right-1 .stem-branch,
-.branch-right-2 .stem-branch,
-.branch-right-3 .stem-branch {
-  left: 0;
-  animation: growBranchRight var(--duration-branch) ease forwards;
-}
-
-@keyframes growBranchLeft  { from { width: 0 } to { width: 36px } }
-@keyframes growBranchRight { from { width: 0 } to { width: 36px } }
-
-.branch-left-1  { animation-delay: 0.9s;  }
-.branch-right-1 { animation-delay: 1.05s; }
-.branch-left-2  { animation-delay: 1.2s;  }
-.branch-right-2 { animation-delay: 1.35s; }
-.branch-left-3  { animation-delay: 1.5s;  }
-.branch-right-3 { animation-delay: 1.65s; }
-
-.branch-left-1  .stem-branch { animation-delay: 0.9s;  }
-.branch-right-1 .stem-branch { animation-delay: 1.05s; }
-.branch-left-2  .stem-branch { animation-delay: 1.2s;  }
-.branch-right-2 .stem-branch { animation-delay: 1.35s; }
-.branch-left-3  .stem-branch { animation-delay: 1.5s;  }
-.branch-right-3 .stem-branch { animation-delay: 1.65s; }
-
-/* ─── HOJAS ─────────────────────────────────────── */
-.leaf {
-  position: absolute;
-  width: 28px;
-  height: 18px;
-  border-radius: 50% 10% 50% 10%;
-  background: radial-gradient(ellipse at 30% 35%, var(--leaf-light), var(--leaf-color) 60%, var(--leaf-dark));
+/* Hojas SVG */
+.vl {
   opacity: 0;
-  transform-origin: left center;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
 }
-
-.leaf::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 15%;
-  width: 65%;
-  height: 1.5px;
-  background: var(--leaf-dark);
-  border-radius: 1px;
-  transform: translateY(-50%);
-  opacity: 0.55;
+.vl.on {
+  animation: leafPop 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards;
 }
-
-.leaf::before {
-  content: '';
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  width: 35%;
-  height: 35%;
-  border-radius: 50%;
-  background: var(--leaf-light);
-  opacity: 0.45;
-}
-
-.leaf-a { top: -14px; left: -42px; transform: rotate(-30deg) scaleX(-1); }
-.leaf-b { top: -14px; left:   6px; transform: rotate(-30deg); }
-.leaf-c { top: -16px; left: -44px; transform: rotate(-20deg) scaleX(-1); }
-.leaf-d { top:   2px; left: -38px; transform: rotate(20deg) scaleX(-1); }
-.leaf-e { top: -16px; left:   8px; transform: rotate(-25deg); }
-.leaf-f { top: -14px; left: -42px; transform: rotate(-35deg) scaleX(-1); }
-.leaf-g { top: -14px; left:   6px; transform: rotate(-20deg); }
-
 @keyframes leafPop {
-  0%   { opacity: 0; transform: scale(0.2) rotate(-60deg); }
-  60%  { opacity: 1; transform: scale(1.15); }
-  100% { opacity: 1; transform: scale(1); }
+  from { opacity:0; transform: scale(0.1) rotate(-50deg); }
+  65%  { opacity:1; transform: scale(1.12); }
+  to   { opacity:1; transform: scale(1) rotate(0deg); }
 }
 
-@keyframes leafPopMirror {
-  0%   { opacity: 0; transform: scaleX(-1) scale(0.2) rotate(-60deg); }
-  60%  { opacity: 1; transform: scaleX(-1) scale(1.15); }
-  100% { opacity: 1; transform: scaleX(-1) scale(1); }
-}
-
-.leaf-a { animation: leafPopMirror var(--duration-leaf) ease forwards; }
-.leaf-c { animation: leafPopMirror var(--duration-leaf) ease forwards; }
-.leaf-d { animation: leafPopMirror var(--duration-leaf) ease forwards; }
-.leaf-f { animation: leafPopMirror var(--duration-leaf) ease forwards; }
-.leaf-b, .leaf-e, .leaf-g { animation: leafPop var(--duration-leaf) ease forwards; }
-
-.leaf-a { animation-delay: 1.05s; }
-.leaf-b { animation-delay: 1.15s; }
-.leaf-c { animation-delay: 1.3s;  }
-.leaf-d { animation-delay: 1.38s; }
-.leaf-e { animation-delay: 1.48s; }
-.leaf-f { animation-delay: 1.62s; }
-.leaf-g { animation-delay: 1.75s; }
-
-/* ── Balanceo ── */
-@keyframes sway {
-  0%, 100% { transform: scaleX(-1) rotate(0deg); }
-  30%       { transform: scaleX(-1) rotate(6deg) translateY(-1px); }
-  70%       { transform: scaleX(-1) rotate(-4deg) translateY(1px); }
-}
-
-@keyframes swayAlt {
-  0%, 100% { transform: rotate(0deg); }
-  30%       { transform: rotate(-5deg) translateY(-1px); }
-  70%       { transform: rotate(4deg) translateY(1px); }
-}
-
-.leaf-sway     { animation: leafPopMirror var(--duration-leaf) ease forwards,
-                            sway var(--duration-sway) ease-in-out infinite; }
-.leaf-sway-alt { animation: leafPop var(--duration-leaf) ease forwards,
-                            swayAlt var(--duration-sway) ease-in-out infinite; }
-
-.leaf-a.leaf-sway     { animation-delay: 1.05s, 2s; }
-.leaf-c.leaf-sway     { animation-delay: 1.3s,  2.2s; }
-.leaf-d.leaf-sway     { animation-delay: 1.38s, 2.5s; }
-.leaf-f.leaf-sway     { animation-delay: 1.62s, 2.8s; }
-.leaf-b.leaf-sway-alt { animation-delay: 1.15s, 2.1s; }
-.leaf-e.leaf-sway     { animation-delay: 1.48s, 2.4s; }
-.leaf-g.leaf-sway     { animation-delay: 1.75s, 2.7s; }
-
-/* ─── FLORES (mejoradas con más pétalos) ─────────── */
-.flower {
-  position: absolute;
-  width: 22px;
-  height: 22px;
+/* Flores SVG */
+.vf {
   opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
 }
-
-.flower::before {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border-radius: 50%;
-  background: var(--flower-color);
-  box-shadow:
-    0  -11px 0 3px var(--flower-color),
-    0   11px 0 3px var(--flower-color),
-   -11px 0   0 3px var(--flower-color),
-    11px 0   0 3px var(--flower-color),
-   -8px -8px 0 2px var(--flower-color),
-    8px -8px 0 2px var(--flower-color),
-   -8px  8px 0 2px var(--flower-color),
-    8px  8px 0 2px var(--flower-color);
-  filter: blur(0.3px);
+.vf.on {
+  animation: flowerPop 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards,
+             flowerPulse 2.5s ease-in-out 0.7s infinite;
 }
-
-.flower::after {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffe066, var(--flower-center));
-  z-index: 1;
-  box-shadow: 0 0 6px rgba(247,127,0,0.5);
+@keyframes flowerPop {
+  from { opacity:0; transform: scale(0) rotate(-90deg); }
+  60%  { opacity:1; transform: scale(1.2) rotate(8deg); }
+  80%  { transform: scale(0.92) rotate(-3deg); }
+  to   { opacity:1; transform: scale(1) rotate(0deg); }
 }
-
-.flower-a { top: -28px; left: -52px; }
-.flower-b { top: -28px; left:   6px; }
-.flower-c { top: -30px; left:   4px; }
-
-@keyframes flowerBloom {
-  0%   { opacity: 0; transform: scale(0) rotate(-90deg); }
-  50%  { opacity: 1; transform: scale(1.25) rotate(5deg); }
-  75%  { transform: scale(0.92) rotate(-3deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0deg); }
-}
-
-/* Pulso suave de la flor después de aparecer */
 @keyframes flowerPulse {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50%       { transform: scale(1.08); filter: brightness(1.2); }
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.08); }
 }
 
-.flower-a {
-  animation:
-    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.4s  forwards,
-    flowerPulse 2.2s ease-in-out 2.5s infinite;
-}
-.flower-b {
-  animation:
-    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.7s  forwards,
-    flowerPulse 2.2s ease-in-out 2.8s infinite;
-}
-.flower-c {
-  animation:
-    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.95s forwards,
-    flowerPulse 2.2s ease-in-out 3.1s infinite;
-}
-
-/* ─── ZARCILLOS ─────────────────────────────────── */
-.tendril {
-  position: absolute;
-  width: 2px;
-  height: 0;
-  background: linear-gradient(to top, transparent, var(--tendril-color));
-  border-radius: 1px;
+/* Zarcillos */
+.vz {
+  fill: none;
+  stroke: var(--vc);
+  stroke-linecap: round;
   opacity: 0;
 }
-
-.tendril-1 { left: calc(50% + 20px); bottom: 55%; transform: rotate(30deg);  transform-origin: bottom; }
-.tendril-2 { left: calc(50% - 24px); bottom: 40%; transform: rotate(-25deg); transform-origin: bottom; }
-.tendril-3 { left: calc(50% + 18px); bottom: 22%; transform: rotate(40deg);  transform-origin: bottom; }
-
-@keyframes growTendril {
-  0%   { height: 0; opacity: 0; }
-  30%  { opacity: 0.8; }
-  100% { height: 24px; opacity: 0.5; }
+.vz.on {
+  animation: tendrilIn 0.6s ease forwards;
+}
+@keyframes tendrilIn {
+  from { opacity:0; stroke-dashoffset: 100; }
+  to   { opacity:0.5; stroke-dashoffset: 0; }
 }
 
-.tendril-1 { animation: growTendril 0.5s ease 1.55s forwards; }
-.tendril-2 { animation: growTendril 0.5s ease 1.75s forwards; }
-.tendril-3 { animation: growTendril 0.5s ease 1.9s  forwards; }
+/* Partículas flotantes */
+.spore {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--vc);
+  opacity: 0;
+  animation: sporeUp linear infinite;
+}
+@keyframes sporeUp {
+  0%   { opacity:0; transform:translateX(0) translateY(0); }
+  8%   { opacity:0.55; }
+  85%  { opacity:0.2; }
+  100% { opacity:0; transform:translateX(var(--sx,12px)) translateY(-110vh); }
+}
 
-/* ─── TEXTO Y BARRA ──────────────────────────────── */
-.loader-text-wrap {
+/* ── CENTRO: emblema + nombre + barra ───────────────── */
+.ldr-center {
+  position: relative;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  animation: fadeInText 0.6s ease 0.4s forwards;
-  opacity: 0;
+  gap: 1.6rem;
+  animation: centerIn 0.9s ease 0.15s both;
+}
+@keyframes centerIn {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Círculo emblema */
+.ldr-emblem {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(61,218,102,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  z-index: 1;
+  box-shadow: 0 0 35px var(--glow), 0 0 80px var(--glowf), inset 0 0 25px var(--glowf);
+  animation: emblemPulse 3.5s ease-in-out infinite;
+}
+@keyframes emblemPulse {
+  0%,100% { box-shadow: 0 0 25px var(--glow), 0 0 60px var(--glowf); }
+  50%     { box-shadow: 0 0 50px var(--glow), 0 0 110px var(--glowf); }
 }
 
-@keyframes fadeInText {
-  to { opacity: 1; }
-}
-
-.loader-label {
-  font-family: 'Syncopate', 'Segoe UI', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--text-color);
-  opacity: 0.7;
-  /* Efecto typing */
-  overflow: hidden;
-  white-space: nowrap;
-  animation: fadeInText 0.6s ease 0.4s forwards, typing 1.2s steps(8, end) 0.4s both;
-  width: 0;
-}
-
-@keyframes typing {
-  from { width: 0; }
-  to   { width: 8ch; }
-}
-
-/* Barra de progreso mejorada */
-.loader-bar-track {
-  width: 160px;
-  height: 4px;
-  background: var(--bar-bg);
-  border-radius: 99px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 0 0 1px rgba(77,255,127,0.1);
-}
-
-.loader-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--vine-dark), var(--bar-fill), #a8ffca);
-  border-radius: 99px;
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  box-shadow: 0 0 8px var(--glow), 0 0 16px rgba(77,255,127,0.2);
-}
-
-/* Brillo deslizante en la barra */
-.loader-bar-fill::after {
+/* Anillo exterior giratorio */
+.ldr-emblem::before {
   content: '';
   position: absolute;
-  top: 0; bottom: 0;
-  right: 0;
-  width: 30px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-  animation: shimmer 1.5s ease-in-out infinite;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: var(--vc);
+  border-right-color: rgba(61,218,102,0.2);
+  animation: spin 2.4s linear infinite;
+}
+/* Segundo anillo punteado, inverso */
+.ldr-emblem::after {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 1px dashed rgba(61,218,102,0.18);
+  animation: spin 7s linear infinite reverse;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* SVG de planta dentro del emblema */
+.ldr-plant-svg {
+  width: 58px;
+  height: 58px;
+  filter: drop-shadow(0 0 10px var(--glow));
 }
 
-@keyframes shimmer {
-  from { opacity: 0; transform: translateX(-20px); }
-  50%  { opacity: 1; }
-  to   { opacity: 0; transform: translateX(10px); }
-}
-
-.loader-pct {
-  font-family: 'Outfit', 'Segoe UI', sans-serif;
-  font-size: 0.72rem;
+/* Nombre del vivero */
+.ldr-brand {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--text-color);
-  opacity: 0.6;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--tx);
+  opacity: 0;
+  text-shadow: 0 0 28px var(--glow);
+  animation: brandIn 1s ease 0.7s forwards;
+}
+@keyframes brandIn {
+  from { opacity:0; letter-spacing:0.12em; }
+  to   { opacity:0.85; letter-spacing:0.42em; }
+}
+
+/* Barra + porcentaje */
+.ldr-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+.ldr-bar-track {
+  width: 210px;
+  height: 2px;
+  background: rgba(61,218,102,0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+#loaderBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--vd), var(--vc), var(--ll));
+  border-radius: 99px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 14px var(--glow);
+  position: relative;
+}
+#loaderBar::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; right: -20px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
+  animation: barShimmer 2s ease-in-out infinite;
+}
+@keyframes barShimmer {
+  from { opacity:0; transform:translateX(-30px); }
+  50%  { opacity:1; }
+  to   { opacity:0; transform:translateX(10px); }
+}
+#loaderPct {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--tx);
+  opacity: 0.45;
   font-variant-numeric: tabular-nums;
   min-width: 3.5ch;
   text-align: center;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 480px) {
-  .vine-wrap { width: 90px; height: 210px; }
-  .leaf { width: 22px; height: 14px; }
-  .loader-bar-track { width: 130px; }
+  .ldr-emblem      { width: 84px; height: 84px; }
+  .ldr-plant-svg   { width: 44px; height: 44px; }
+  .ldr-bar-track   { width: 155px; }
 }
