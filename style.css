@@ -216,8 +216,8 @@ img {
 .main-nav {
   position: fixed;
   top: 3.8rem;
-  left: 1rem;
   right: 1rem;
+  left: auto;
   display: grid;
   gap: 0.7rem;
   opacity: 0;
