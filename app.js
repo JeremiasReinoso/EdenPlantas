@@ -12,15 +12,9 @@ const storeStatus = document.querySelector("#storeStatus");
 
 // La intro animada (loader con enredadera) es manejada por loader.js
 
-// Toggle manual + persistencia de tema
-if (themeToggle) {
-  themeToggle.addEventListener("click", () => {
-    const currentTheme = document.documentElement.getAttribute("data-theme");
-    const nextTheme = currentTheme === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    localStorage.setItem("theme", nextTheme);
-  });
-}
+// Tema oscuro forzado
+document.documentElement.setAttribute("data-theme", "dark");
+localStorage.setItem("theme", "dark");
 
 // Menu movil
 if (menuBtn && mainNav) {
