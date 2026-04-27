@@ -1,0 +1,405 @@
+/* ════════════════════════════════════════════════════
+   loader.css — Pantalla de carga con enredadera
+   ════════════════════════════════════════════════════
+   Variables: cambiá estos valores para personalizar
+   ════════════════════════════════════════════════════ */
+
+:root {
+  --loader-bg:       #06110a;
+  --vine-color:      #4dff7f;
+  --vine-dark:       #2d9e54;
+  --leaf-color:      #39cc62;
+  --leaf-dark:       #1a7a3a;
+  --leaf-light:      #8dffa8;
+  --flower-color:    #f9c74f;
+  --flower-center:   #f77f00;
+  --tendril-color:   #4dff7f;
+  --text-color:      #4dff7f;
+  --bar-bg:          rgba(77,255,127,0.15);
+  --bar-fill:        #4dff7f;
+  --duration-stem:   1.4s;
+  --duration-branch: 0.8s;
+  --duration-leaf:   0.5s;
+  --duration-sway:   3.2s;
+}
+
+[data-theme="light"] {
+  --loader-bg:    #f5f8f2;
+  --vine-color:   #3a7d44;
+  --vine-dark:    #2d5f35;
+  --leaf-color:   #5aab63;
+  --leaf-dark:    #3a7d44;
+  --leaf-light:   #8ed49a;
+  --tendril-color:#7ac87f;
+  --text-color:   #3a7d44;
+  --bar-bg:       #d4ebd6;
+  --bar-fill:     #3a7d44;
+}
+
+/* ─── RESET MÍNIMO ──────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── LOADER CONTAINER ──────────────────────────── */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: var(--loader-bg);
+  transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+.loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ─── VINE WRAPPER ──────────────────────────────── */
+.vine-wrap {
+  position: relative;
+  width: 120px;
+  height: 280px;
+}
+
+/* ─── TALLO PRINCIPAL ───────────────────────────── */
+.stem-main {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 0;                           /* crece desde 0 */
+  background: linear-gradient(to top, var(--vine-dark), var(--vine-color));
+  border-radius: 3px;
+  transform-origin: bottom center;
+  animation: growStem var(--duration-stem) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes growStem {
+  0%   { height: 0; }
+  100% { height: 100%; }
+}
+
+/* ─── RAMAS ─────────────────────────────────────── */
+.branch {
+  position: absolute;
+  left: 50%;
+}
+
+/* Posiciones verticales de cada rama */
+.branch-left-1  { bottom: 72%; }
+.branch-right-1 { bottom: 60%; }
+.branch-left-2  { bottom: 47%; }
+.branch-right-2 { bottom: 34%; }
+.branch-left-3  { bottom: 20%; }
+.branch-right-3 { bottom: 8%;  }
+
+/* Tallo de rama */
+.stem-branch {
+  position: absolute;
+  top: 0;
+  height: 5px;
+  width: 0;
+  background: var(--vine-color);
+  border-radius: 0 3px 3px 0;
+  transform-origin: left center;
+}
+
+/* Ramas a la izquierda */
+.branch-left-1  .stem-branch,
+.branch-left-2  .stem-branch,
+.branch-left-3  .stem-branch {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+  transform-origin: right center;
+  animation: growBranchLeft var(--duration-branch) ease forwards;
+}
+
+/* Ramas a la derecha */
+.branch-right-1 .stem-branch,
+.branch-right-2 .stem-branch,
+.branch-right-3 .stem-branch {
+  left: 0;
+  animation: growBranchRight var(--duration-branch) ease forwards;
+}
+
+@keyframes growBranchLeft  { from { width: 0 } to { width: 36px } }
+@keyframes growBranchRight { from { width: 0 } to { width: 36px } }
+
+/* Delays escalonados para que las ramas aparezcan de arriba a abajo */
+.branch-left-1  { animation-delay: 0.9s;  }
+.branch-right-1 { animation-delay: 1.05s; }
+.branch-left-2  { animation-delay: 1.2s;  }
+.branch-right-2 { animation-delay: 1.35s; }
+.branch-left-3  { animation-delay: 1.5s;  }
+.branch-right-3 { animation-delay: 1.65s; }
+
+.branch-left-1  .stem-branch { animation-delay: 0.9s;  }
+.branch-right-1 .stem-branch { animation-delay: 1.05s; }
+.branch-left-2  .stem-branch { animation-delay: 1.2s;  }
+.branch-right-2 .stem-branch { animation-delay: 1.35s; }
+.branch-left-3  .stem-branch { animation-delay: 1.5s;  }
+.branch-right-3 .stem-branch { animation-delay: 1.65s; }
+
+/* ─── HOJAS ─────────────────────────────────────── */
+.leaf {
+  position: absolute;
+  width: 28px;
+  height: 18px;
+  border-radius: 50% 10% 50% 10%;
+  background: var(--leaf-color);
+  opacity: 0;
+  transform-origin: left center;
+}
+
+/* Vena central (pseudo-elemento) */
+.leaf::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 65%;
+  height: 1.5px;
+  background: var(--leaf-dark);
+  border-radius: 1px;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+
+/* Reflejo de luz en la hoja */
+.leaf::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 35%;
+  height: 35%;
+  border-radius: 50%;
+  background: var(--leaf-light);
+  opacity: 0.35;
+}
+
+/* ── Posiciones individuales de cada hoja ── */
+.leaf-a { top: -14px; left: -42px;  transform: rotate(-30deg) scaleX(-1); }
+.leaf-b { top: -14px; left:   6px;  transform: rotate(-30deg); }
+.leaf-c { top: -16px; left: -44px;  transform: rotate(-20deg) scaleX(-1); }
+.leaf-d { top:   2px; left: -38px;  transform: rotate(20deg) scaleX(-1); }
+.leaf-e { top: -16px; left:   8px;  transform: rotate(-25deg); }
+.leaf-f { top: -14px; left: -42px;  transform: rotate(-35deg) scaleX(-1); }
+.leaf-g { top: -14px; left:   6px;  transform: rotate(-20deg); }
+
+/* Animación de aparición */
+@keyframes leafPop {
+  0%   { opacity: 0; transform: scale(0.2) rotate(-60deg); }
+  60%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Sobreescribimos transform para hojas espejadas */
+.leaf-a { animation: leafPopMirror var(--duration-leaf) ease forwards; }
+.leaf-c { animation: leafPopMirror var(--duration-leaf) ease forwards; }
+.leaf-d { animation: leafPopMirror var(--duration-leaf) ease forwards; }
+.leaf-f { animation: leafPopMirror var(--duration-leaf) ease forwards; }
+
+.leaf-b,
+.leaf-e,
+.leaf-g { animation: leafPop var(--duration-leaf) ease forwards; }
+
+@keyframes leafPopMirror {
+  0%   { opacity: 0; transform: scaleX(-1) scale(0.2) rotate(-60deg); }
+  60%  { opacity: 1; transform: scaleX(-1) scale(1.1); }
+  100% { opacity: 1; transform: scaleX(-1) scale(1); }
+}
+
+/* Delays de aparición de hojas */
+.leaf-a { animation-delay: 1.05s; }
+.leaf-b { animation-delay: 1.15s; }
+.leaf-c { animation-delay: 1.3s;  }
+.leaf-d { animation-delay: 1.38s; }
+.leaf-e { animation-delay: 1.48s; }
+.leaf-f { animation-delay: 1.62s; }
+.leaf-g { animation-delay: 1.75s; }
+
+/* ── Balanceo (viento) ── */
+@keyframes sway {
+  0%, 100% { transform: scaleX(-1) rotate(0deg); }
+  30%       { transform: scaleX(-1) rotate(6deg) translateY(-1px); }
+  70%       { transform: scaleX(-1) rotate(-4deg) translateY(1px); }
+}
+
+@keyframes swayAlt {
+  0%, 100% { transform: rotate(0deg); }
+  30%       { transform: rotate(-5deg) translateY(-1px); }
+  70%       { transform: rotate(4deg) translateY(1px); }
+}
+
+/* Solo activa balanceo DESPUÉS de que la hoja aparece (opacity=1) */
+.leaf-sway     { animation: leafPopMirror var(--duration-leaf) ease forwards,
+                            sway var(--duration-sway) ease-in-out infinite; }
+.leaf-sway-alt { animation: leafPop var(--duration-leaf) ease forwards,
+                            swayAlt var(--duration-sway) ease-in-out infinite; }
+
+/* Delays personalizados para hojas con sway */
+.leaf-a.leaf-sway     { animation-delay: 1.05s, 2s; }
+.leaf-c.leaf-sway     { animation-delay: 1.3s,  2.2s; }
+.leaf-d.leaf-sway     { animation-delay: 1.38s, 2.5s; }
+.leaf-f.leaf-sway     { animation-delay: 1.62s, 2.8s; }
+.leaf-b.leaf-sway-alt { animation-delay: 1.15s, 2.1s; }
+.leaf-e.leaf-sway     { animation-delay: 1.48s, 2.4s; }
+.leaf-g.leaf-sway     { animation-delay: 1.75s, 2.7s; }
+
+/* ─── FLORES ─────────────────────────────────────── */
+.flower {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+}
+
+/* Pétalos: 4 pseudo-círculos usando box-shadow */
+.flower::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--flower-color);
+  box-shadow:
+    0   -9px  0 2px var(--flower-color),  /* arriba  */
+    0    9px  0 2px var(--flower-color),  /* abajo   */
+   -9px  0    0 2px var(--flower-color),  /* izq     */
+    9px  0    0 2px var(--flower-color);  /* der     */
+}
+
+/* Centro de la flor */
+.flower::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--flower-center);
+  z-index: 1;
+}
+
+.flower-a { top: -28px; left: -52px; }
+.flower-b { top: -28px; left:   6px; }
+.flower-c { top: -30px; left:   4px; }
+
+@keyframes flowerBloom {
+  0%   { opacity: 0; transform: scale(0) rotate(-90deg); }
+  60%  { opacity: 1; transform: scale(1.15) rotate(10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.flower-a { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.4s; }
+.flower-b { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.7s; }
+.flower-c { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.95s; }
+
+/* ─── ZARCILLOS ─────────────────────────────────── */
+.tendril {
+  position: absolute;
+  width: 2px;
+  height: 0;
+  background: var(--tendril-color);
+  border-radius: 1px;
+  opacity: 0;
+}
+
+.tendril-1 { left: calc(50% + 20px); bottom: 55%; transform: rotate(30deg);  transform-origin: bottom; }
+.tendril-2 { left: calc(50% - 24px); bottom: 40%; transform: rotate(-25deg); transform-origin: bottom; }
+.tendril-3 { left: calc(50% + 18px); bottom: 22%; transform: rotate(40deg);  transform-origin: bottom; }
+
+@keyframes growTendril {
+  0%   { height: 0; opacity: 0; }
+  30%  { opacity: 0.7; }
+  100% { height: 22px; opacity: 0.6; }
+}
+
+.tendril-1 { animation: growTendril 0.5s ease forwards; animation-delay: 1.55s; }
+.tendril-2 { animation: growTendril 0.5s ease forwards; animation-delay: 1.75s; }
+.tendril-3 { animation: growTendril 0.5s ease forwards; animation-delay: 1.9s;  }
+
+/* ─── TEXTO Y BARRA DE PROGRESO ─────────────────── */
+.loader-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeInText 0.6s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+@keyframes fadeInText {
+  to { opacity: 1; }
+}
+
+.loader-label {
+  font-family: 'Syncopate', 'Segoe UI', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.loader-bar-track {
+  width: 130px;
+  height: 3px;
+  background: var(--bar-bg);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--bar-fill);
+  border-radius: 99px;
+  transition: width 0.25s ease;
+}
+
+.loader-pct {
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-color);
+  opacity: 0.55;
+}
+
+/* También agrego el efecto neon al tallo en tema oscuro */
+[data-theme="dark"] .stem-main,
+.stem-main {
+  box-shadow: 0 0 8px rgba(77, 255, 127, 0.3);
+}
+
+/* ─── CONTENIDO PRINCIPAL ───────────────────────── */
+.main-content {
+  display: none;
+  padding: 4rem 2rem;
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
+  text-align: center;
+  color: #2d5f35;
+  animation: fadeInMain 0.6s ease both;
+}
+
+.main-content:not([hidden]) {
+  display: block;
+}
+
+@keyframes fadeInMain {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 480px) {
+  .vine-wrap { width: 90px; height: 210px; }
+  .leaf { width: 22px; height: 14px; }
+}
