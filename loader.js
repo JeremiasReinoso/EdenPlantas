@@ -69,8 +69,6 @@
 
   /* ════════════════════════════════════════════════════
      CONSTRUCCIÓN DE LA ENREDADERA SVG
-     Dibuja tallos, ramas, hojas y flores que crecen
-     desde los bordes y esquinas cubriendo la pantalla.
   ════════════════════════════════════════════════════ */
   function buildVine() {
     const loader = document.getElementById('loader');
@@ -84,7 +82,6 @@
     const fc  = cssVar('--fc')  || '#f9c74f';
     const fce = cssVar('--fce') || '#f77f00';
 
-    /* ── Crear SVG ── */
     const svg = svgEl('svg', {
       id: 'vine-svg',
       viewBox: `0 0 ${W} ${H}`,
@@ -92,7 +89,6 @@
     });
     loader.prepend(svg);
 
-    /* ── Anima un path con stroke-dashoffset ── */
     function drawPath(path, len, dur, delay) {
       path.style.strokeDasharray  = len;
       path.style.strokeDashoffset = len;
@@ -102,7 +98,6 @@
       }, delay);
     }
 
-    /* ── Tallo curvo genérico ── */
     function stem(d, w, delay, dur, opacity) {
       const p = svgEl('path', {
         d, class:'vp',
@@ -114,23 +109,19 @@
       return p;
     }
 
-    /* ── Hoja ── */
     function leaf(cx, cy, angle, size, flip, delay) {
       const g = svgEl('g', {
         class: 'vl',
         transform: `translate(${cx},${cy}) rotate(${angle}) scale(${flip?-1:1},1)`,
       });
       const s = size;
-      // cuerpo
       const body = svgEl('path', {
         d: `M0,0 C${s*0.25},${-s*0.75} ${s*1.05},${-s*0.65} ${s*1.35},0 C${s*1.05},${s*0.65} ${s*0.25},${s*0.75} 0,0`,
         fill: vc, stroke: vd, 'stroke-width':'0.8', opacity:'0.92',
       });
-      // vena
       const vein = svgEl('path', {
         d:`M0,0 L${s*1.1},0`, fill:'none', stroke:vd, 'stroke-width':'0.7', opacity:'0.55',
       });
-      // brillo
       const shine = svgEl('ellipse', {
         cx:s*0.35, cy:-s*0.24, rx:s*0.2, ry:s*0.11, fill:ll, opacity:'0.38',
       });
@@ -140,7 +131,6 @@
       return g;
     }
 
-    /* ── Flor ── */
     function flower(cx, cy, size, delay, isLast) {
       const g = svgEl('g', { class:'vf', transform:`translate(${cx},${cy})` });
       if (isLast) g.id = 'last-flower';
@@ -171,7 +161,6 @@
       return g;
     }
 
-    /* ── Zarcillo ── */
     function curl(cx, cy, delay) {
       const p = svgEl('path', {
         class:'vz',
@@ -188,41 +177,28 @@
       }, delay);
     }
 
-    /* ════════════════════════════════════════════════
-       TALLOS PRINCIPALES
-       Crecen desde las cuatro esquinas y el centro
-    ════════════════════════════════════════════════ */
-
-    // Esquina inferior-izquierda → sube y se curva hacia el centro
     stem(`M-5,${H+5} C40,${H*0.88} 70,${H*0.72} 95,${H*0.55}
           C118,${H*0.40} 80,${H*0.25} 110,${H*0.12}
           C130,${H*0.04} 170,0 200,-5`,
       4.5, 100, 2400);
 
-    // Esquina inferior-derecha → sube
     stem(`M${W+5},${H+5} C${W-40},${H*0.88} ${W-70},${H*0.72} ${W-95},${H*0.55}
           C${W-118},${H*0.40} ${W-80},${H*0.25} ${W-110},${H*0.12}
           C${W-130},${H*0.04} ${W-170},0 ${W-200},-5`,
       4.5, 200, 2400);
 
-    // Centro inferior → sube recto con ondas
     stem(`M${W/2},${H+5} C${W/2-20},${H*0.8} ${W/2+20},${H*0.6} ${W/2},${H*0.42}
           C${W/2-15},${H*0.28} ${W/2+10},${H*0.15} ${W/2},-5`,
       3, 400, 2200, 0.55);
 
-    // Esquina superior-izquierda → baja
     stem(`M-5,-5 C50,${H*0.08} 40,${H*0.22} 70,${H*0.35}
           C95,${H*0.47} 60,${H*0.60} 85,${H*0.72}`,
       3, 600, 1800, 0.7);
 
-    // Esquina superior-derecha → baja
     stem(`M${W+5},-5 C${W-50},${H*0.08} ${W-40},${H*0.22} ${W-70},${H*0.35}
           C${W-95},${H*0.47} ${W-60},${H*0.60} ${W-85},${H*0.72}`,
       3, 700, 1800, 0.7);
 
-    /* ════════════════════════════════════════════════
-       RAMAS LATERALES del tallo izquierdo
-    ════════════════════════════════════════════════ */
     const leftBranches = [
       { cx:88,  cy:H*0.52, dx:55,  dy:-60, delay:900  },
       { cx:97,  cy:H*0.38, dx:-60, dy:-50, delay:1100 },
@@ -241,9 +217,6 @@
       curl(ex-10, ey-10, delay+700);
     });
 
-    /* ════════════════════════════════════════════════
-       RAMAS LATERALES del tallo derecho
-    ════════════════════════════════════════════════ */
     const rightBranches = [
       { cx:W-88,  cy:H*0.52, dx:-55, dy:-60, delay:1000 },
       { cx:W-97,  cy:H*0.38, dx:60,  dy:-50, delay:1200 },
@@ -262,22 +235,16 @@
       curl(ex+10, ey-10, delay+700);
     });
 
-    /* ════════════════════════════════════════════════
-       RAMAS HORIZONTALES que atraviesan la pantalla
-    ════════════════════════════════════════════════ */
     [
       { y:H*0.78, delay:1650 },
       { y:H*0.52, delay:1850 },
       { y:H*0.28, delay:2050 },
     ].forEach(({y, delay}) => {
-      // rama izq→centro
       stem(`M0,${y} C${W*0.15},${y-40} ${W*0.3},${y+30} ${W*0.48},${y}`,
         1.8, delay, 900, 0.65);
-      // rama der→centro
       stem(`M${W},${y} C${W*0.85},${y-40} ${W*0.7},${y+30} ${W*0.52},${y}`,
         1.8, delay+80, 900, 0.65);
 
-      // hojas colgantes a lo largo de la rama horizontal
       for (let i = 1; i < 5; i++) {
         const lx = W * (0.1 + i * 0.18);
         const hang = svgEl('path', {
@@ -290,20 +257,13 @@
       }
     });
 
-    /* ════════════════════════════════════════════════
-       FLORES GRANDES en posiciones clave
-    ════════════════════════════════════════════════ */
     flower(170,  H*0.10, 11, 1900, false);
     flower(W-165,H*0.10, 10, 2000, false);
     flower(110,  H*0.76, 10, 1600, false);
     flower(W-110,H*0.76, 10, 1700, false);
 
-    /* Última flor — su animationend dispara el cierre */
     flower(W/2, H*0.5-80, 13, 2400, true);
 
-    /* ════════════════════════════════════════════════
-       PARTÍCULAS FLOTANTES (spores)
-    ════════════════════════════════════════════════ */
     const sporeData = [
       {l:'7%', w:3,dur:7,del:0.4},{l:'19%',w:2,dur:9,del:1.1},
       {l:'31%',w:3,dur:6,del:0.7},{l:'46%',w:2,dur:11,del:0.2},
@@ -323,7 +283,6 @@
       loader.appendChild(s);
     });
 
-    /* Fallback: si animationend no dispara en 4s, cierra igual */
     setTimeout(() => { animDone = true; finish(); }, 4200);
   }
 
@@ -334,10 +293,8 @@
     const loader = document.getElementById('loader');
     if (!loader) return;
 
-    // Vaciar contenido anterior (vine-wrap, loader-text-wrap, etc.)
     loader.innerHTML = '';
 
-    // Centro
     const center = document.createElement('div');
     center.className = 'ldr-center';
     center.innerHTML = `
@@ -382,11 +339,11 @@
   }
 
   /* ── INIT ─────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function () {
-    buildHTML();
-    setPct(0);
-    setTimeout(buildVine, 60);
-    setTimeout(tick, 280);
-  });
+  // El script se carga al final del <body>, el DOM ya está listo.
+  // Usar DOMContentLoaded aquí nunca dispara porque el evento ya ocurrió.
+  buildHTML();
+  setPct(0);
+  setTimeout(buildVine, 60);
+  setTimeout(tick, 280);
 
 })();
