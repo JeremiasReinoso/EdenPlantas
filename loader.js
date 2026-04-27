@@ -16,6 +16,7 @@
     for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
     return e;
   }
+
   function cssVar(v) {
     return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   }
