@@ -289,6 +289,7 @@
 
   /* ════════════════════════════════════════════════════
      CONSTRUCCIÓN DEL HTML INTERNO DEL LOADER
+     — Ahora usa la imagen real del logo —
   ════════════════════════════════════════════════════ */
   function buildHTML() {
     const loader = document.getElementById('loader');
@@ -300,35 +301,16 @@
     center.className = 'ldr-center';
     center.innerHTML = `
       <div class="ldr-emblem">
-        <svg class="ldr-plant-svg" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Raíces -->
-          <path d="M29 52 C24 54 19 56 14 54" stroke="var(--vd)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M29 52 C34 54 39 56 44 54" stroke="var(--vd)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M29 52 L29 58"             stroke="var(--vd)" stroke-width="2" stroke-linecap="round"/>
-          <!-- Tallo -->
-          <path d="M29 52 C29 52 29 34 29 22" stroke="var(--vc)" stroke-width="2.8" stroke-linecap="round"/>
-          <!-- Hoja grande izquierda -->
-          <path d="M29 34 C22 27 11 25 8 18 C13 13 24 18 29 27" fill="var(--vc)" opacity="0.95"/>
-          <!-- Vena izquierda -->
-          <path d="M29 30 L12 20" stroke="var(--vd)" stroke-width="0.9" opacity="0.6" stroke-linecap="round"/>
-          <!-- Hoja grande derecha -->
-          <path d="M29 28 C36 21 47 19 50 12 C45 7 34 12 29 21" fill="var(--vc)" opacity="0.78"/>
-          <!-- Vena derecha -->
-          <path d="M29 25 L46 14" stroke="var(--vd)" stroke-width="0.9" opacity="0.5" stroke-linecap="round"/>
-          <!-- Hoja pequeña izquierda -->
-          <path d="M29 22 C23 16 15 15 12 9 C17 6 25 10 29 17" fill="var(--ll)" opacity="0.65"/>
-          <!-- Flor -->
-          <circle cx="29" cy="12" r="5"   fill="#f9c74f"/>
-          <circle cx="29" cy="12" r="2.8" fill="#f77f00"/>
-          <circle cx="27.5" cy="10.5" r="1.2" fill="#ffe066" opacity="0.7"/>
-          <!-- Pétalos -->
-          <ellipse cx="29" cy="6.5" rx="2.2" ry="1.5" fill="#f9c74f" opacity="0.85"/>
-          <ellipse cx="29" cy="17.5" rx="2.2" ry="1.5" fill="#f9c74f" opacity="0.85"/>
-          <ellipse cx="23.5" cy="12" rx="1.5" ry="2.2" fill="#f9c74f" opacity="0.85"/>
-          <ellipse cx="34.5" cy="12" rx="1.5" ry="2.2" fill="#f9c74f" opacity="0.85"/>
-        </svg>
+        <div class="ldr-glow-ring"></div>
+        <img
+          class="ldr-logo-img"
+          src="Logo Eden Plantas.png"
+          alt="Eden Plantas"
+          draggable="false"
+        />
       </div>
       <div class="ldr-brand">Eden Plantas</div>
+      <div class="ldr-tagline">Vivero · El Bolsón</div>
       <div class="ldr-bar-wrap">
         <div class="ldr-bar-track">
           <div id="loaderBar"></div>
@@ -340,8 +322,6 @@
   }
 
   /* ── INIT ─────────────────────────────────────────── */
-  // El script se carga al final del <body>, el DOM ya está listo.
-  // Usar DOMContentLoaded aquí nunca dispara porque el evento ya ocurrió.
   buildHTML();
   setPct(0);
   setTimeout(buildVine, 60);
