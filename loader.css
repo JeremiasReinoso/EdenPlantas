@@ -1,7 +1,5 @@
 /* ════════════════════════════════════════════════════
    loader.css — Pantalla de carga con enredadera
-   ════════════════════════════════════════════════════
-   Variables: cambiá estos valores para personalizar
    ════════════════════════════════════════════════════ */
 
 :root {
@@ -15,8 +13,9 @@
   --flower-center:   #f77f00;
   --tendril-color:   #4dff7f;
   --text-color:      #4dff7f;
-  --bar-bg:          rgba(77,255,127,0.15);
+  --bar-bg:          rgba(77,255,127,0.12);
   --bar-fill:        #4dff7f;
+  --glow:            rgba(77,255,127,0.45);
   --duration-stem:   1.4s;
   --duration-branch: 0.8s;
   --duration-leaf:   0.5s;
@@ -24,19 +23,19 @@
 }
 
 [data-theme="light"] {
-  --loader-bg:    #f5f8f2;
+  --loader-bg:    #f0f7f1;
   --vine-color:   #3a7d44;
   --vine-dark:    #2d5f35;
   --leaf-color:   #5aab63;
   --leaf-dark:    #3a7d44;
   --leaf-light:   #8ed49a;
   --tendril-color:#7ac87f;
-  --text-color:   #3a7d44;
-  --bar-bg:       #d4ebd6;
+  --text-color:   #2d5f35;
+  --bar-bg:       rgba(58,125,68,0.15);
   --bar-fill:     #3a7d44;
+  --glow:         rgba(58,125,68,0.25);
 }
 
-/* ─── RESET MÍNIMO ──────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ─── LOADER CONTAINER ──────────────────────────── */
@@ -51,6 +50,7 @@
   gap: 2.5rem;
   background: var(--loader-bg);
   transition: opacity 0.75s ease, visibility 0.75s ease;
+  overflow: hidden;
 }
 
 .loader.is-done {
@@ -59,11 +59,59 @@
   pointer-events: none;
 }
 
+/* ─── FONDO: PARTÍCULAS FLOTANTES ───────────────── */
+.loader::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(77,255,127,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(77,255,127,0.04) 0%, transparent 50%);
+  animation: bgPulse 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes bgPulse {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* Partículas flotantes con CSS puro */
+.loader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
+    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
+    radial-gradient(circle, var(--vine-color) 1px, transparent 1px),
+    radial-gradient(circle, var(--vine-color) 1.5px, transparent 1.5px),
+    radial-gradient(circle, var(--vine-color) 1px, transparent 1px);
+  background-size: 200px 200px, 180px 180px, 220px 220px, 160px 160px, 240px 240px;
+  background-position: 10% 20%, 80% 60%, 40% 80%, 65% 15%, 25% 70%;
+  opacity: 0.2;
+  animation: particleFloat 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  from { transform: translateY(0px) translateX(0px); }
+  to   { transform: translateY(-18px) translateX(8px); }
+}
+
 /* ─── VINE WRAPPER ──────────────────────────────── */
 .vine-wrap {
   position: relative;
   width: 120px;
   height: 280px;
+  filter: drop-shadow(0 0 12px var(--glow));
+  animation: vineGlow 2.5s ease-in-out infinite alternate;
+  animation-delay: 2s;
+}
+
+@keyframes vineGlow {
+  from { filter: drop-shadow(0 0 8px var(--glow)); }
+  to   { filter: drop-shadow(0 0 22px var(--glow)) drop-shadow(0 0 40px rgba(77,255,127,0.15)); }
 }
 
 /* ─── TALLO PRINCIPAL ───────────────────────────── */
@@ -73,16 +121,36 @@
   bottom: 0;
   transform: translateX(-50%);
   width: 6px;
-  height: 0;                           /* crece desde 0 */
+  height: 0;
   background: linear-gradient(to top, var(--vine-dark), var(--vine-color));
   border-radius: 3px;
   transform-origin: bottom center;
   animation: growStem var(--duration-stem) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  box-shadow: 0 0 10px rgba(77,255,127,0.4), 0 0 20px rgba(77,255,127,0.15);
 }
 
 @keyframes growStem {
   0%   { height: 0; }
   100% { height: 100%; }
+}
+
+/* ── Pulso de luz que sube por el tallo ── */
+.stem-main::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 30px;
+  background: linear-gradient(to top, transparent, rgba(255,255,255,0.5), transparent);
+  border-radius: 3px;
+  animation: sap 2s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+@keyframes sap {
+  0%   { bottom: 0%;  opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.6; }
+  100% { bottom: 100%; opacity: 0; }
 }
 
 /* ─── RAMAS ─────────────────────────────────────── */
@@ -91,7 +159,6 @@
   left: 50%;
 }
 
-/* Posiciones verticales de cada rama */
 .branch-left-1  { bottom: 72%; }
 .branch-right-1 { bottom: 60%; }
 .branch-left-2  { bottom: 47%; }
@@ -99,7 +166,6 @@
 .branch-left-3  { bottom: 20%; }
 .branch-right-3 { bottom: 8%;  }
 
-/* Tallo de rama */
 .stem-branch {
   position: absolute;
   top: 0;
@@ -110,7 +176,6 @@
   transform-origin: left center;
 }
 
-/* Ramas a la izquierda */
 .branch-left-1  .stem-branch,
 .branch-left-2  .stem-branch,
 .branch-left-3  .stem-branch {
@@ -120,7 +185,6 @@
   animation: growBranchLeft var(--duration-branch) ease forwards;
 }
 
-/* Ramas a la derecha */
 .branch-right-1 .stem-branch,
 .branch-right-2 .stem-branch,
 .branch-right-3 .stem-branch {
@@ -131,7 +195,6 @@
 @keyframes growBranchLeft  { from { width: 0 } to { width: 36px } }
 @keyframes growBranchRight { from { width: 0 } to { width: 36px } }
 
-/* Delays escalonados para que las ramas aparezcan de arriba a abajo */
 .branch-left-1  { animation-delay: 0.9s;  }
 .branch-right-1 { animation-delay: 1.05s; }
 .branch-left-2  { animation-delay: 1.2s;  }
@@ -152,12 +215,11 @@
   width: 28px;
   height: 18px;
   border-radius: 50% 10% 50% 10%;
-  background: var(--leaf-color);
+  background: radial-gradient(ellipse at 30% 35%, var(--leaf-light), var(--leaf-color) 60%, var(--leaf-dark));
   opacity: 0;
   transform-origin: left center;
 }
 
-/* Vena central (pseudo-elemento) */
 .leaf::after {
   content: '';
   position: absolute;
@@ -171,7 +233,6 @@
   opacity: 0.55;
 }
 
-/* Reflejo de luz en la hoja */
 .leaf::before {
   content: '';
   position: absolute;
@@ -181,42 +242,35 @@
   height: 35%;
   border-radius: 50%;
   background: var(--leaf-light);
-  opacity: 0.35;
+  opacity: 0.45;
 }
 
-/* ── Posiciones individuales de cada hoja ── */
-.leaf-a { top: -14px; left: -42px;  transform: rotate(-30deg) scaleX(-1); }
-.leaf-b { top: -14px; left:   6px;  transform: rotate(-30deg); }
-.leaf-c { top: -16px; left: -44px;  transform: rotate(-20deg) scaleX(-1); }
-.leaf-d { top:   2px; left: -38px;  transform: rotate(20deg) scaleX(-1); }
-.leaf-e { top: -16px; left:   8px;  transform: rotate(-25deg); }
-.leaf-f { top: -14px; left: -42px;  transform: rotate(-35deg) scaleX(-1); }
-.leaf-g { top: -14px; left:   6px;  transform: rotate(-20deg); }
+.leaf-a { top: -14px; left: -42px; transform: rotate(-30deg) scaleX(-1); }
+.leaf-b { top: -14px; left:   6px; transform: rotate(-30deg); }
+.leaf-c { top: -16px; left: -44px; transform: rotate(-20deg) scaleX(-1); }
+.leaf-d { top:   2px; left: -38px; transform: rotate(20deg) scaleX(-1); }
+.leaf-e { top: -16px; left:   8px; transform: rotate(-25deg); }
+.leaf-f { top: -14px; left: -42px; transform: rotate(-35deg) scaleX(-1); }
+.leaf-g { top: -14px; left:   6px; transform: rotate(-20deg); }
 
-/* Animación de aparición */
 @keyframes leafPop {
   0%   { opacity: 0; transform: scale(0.2) rotate(-60deg); }
-  60%  { opacity: 1; transform: scale(1.1); }
+  60%  { opacity: 1; transform: scale(1.15); }
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* Sobreescribimos transform para hojas espejadas */
+@keyframes leafPopMirror {
+  0%   { opacity: 0; transform: scaleX(-1) scale(0.2) rotate(-60deg); }
+  60%  { opacity: 1; transform: scaleX(-1) scale(1.15); }
+  100% { opacity: 1; transform: scaleX(-1) scale(1); }
+}
+
 .leaf-a { animation: leafPopMirror var(--duration-leaf) ease forwards; }
 .leaf-c { animation: leafPopMirror var(--duration-leaf) ease forwards; }
 .leaf-d { animation: leafPopMirror var(--duration-leaf) ease forwards; }
 .leaf-f { animation: leafPopMirror var(--duration-leaf) ease forwards; }
+.leaf-b, .leaf-e, .leaf-g { animation: leafPop var(--duration-leaf) ease forwards; }
 
-.leaf-b,
-.leaf-e,
-.leaf-g { animation: leafPop var(--duration-leaf) ease forwards; }
-
-@keyframes leafPopMirror {
-  0%   { opacity: 0; transform: scaleX(-1) scale(0.2) rotate(-60deg); }
-  60%  { opacity: 1; transform: scaleX(-1) scale(1.1); }
-  100% { opacity: 1; transform: scaleX(-1) scale(1); }
-}
-
-/* Delays de aparición de hojas */
 .leaf-a { animation-delay: 1.05s; }
 .leaf-b { animation-delay: 1.15s; }
 .leaf-c { animation-delay: 1.3s;  }
@@ -225,7 +279,7 @@
 .leaf-f { animation-delay: 1.62s; }
 .leaf-g { animation-delay: 1.75s; }
 
-/* ── Balanceo (viento) ── */
+/* ── Balanceo ── */
 @keyframes sway {
   0%, 100% { transform: scaleX(-1) rotate(0deg); }
   30%       { transform: scaleX(-1) rotate(6deg) translateY(-1px); }
@@ -238,13 +292,11 @@
   70%       { transform: rotate(4deg) translateY(1px); }
 }
 
-/* Solo activa balanceo DESPUÉS de que la hoja aparece (opacity=1) */
 .leaf-sway     { animation: leafPopMirror var(--duration-leaf) ease forwards,
                             sway var(--duration-sway) ease-in-out infinite; }
 .leaf-sway-alt { animation: leafPop var(--duration-leaf) ease forwards,
                             swayAlt var(--duration-sway) ease-in-out infinite; }
 
-/* Delays personalizados para hojas con sway */
 .leaf-a.leaf-sway     { animation-delay: 1.05s, 2s; }
 .leaf-c.leaf-sway     { animation-delay: 1.3s,  2.2s; }
 .leaf-d.leaf-sway     { animation-delay: 1.38s, 2.5s; }
@@ -253,36 +305,40 @@
 .leaf-e.leaf-sway     { animation-delay: 1.48s, 2.4s; }
 .leaf-g.leaf-sway     { animation-delay: 1.75s, 2.7s; }
 
-/* ─── FLORES ─────────────────────────────────────── */
+/* ─── FLORES (mejoradas con más pétalos) ─────────── */
 .flower {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   opacity: 0;
 }
 
-/* Pétalos: 4 pseudo-círculos usando box-shadow */
 .flower::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--flower-color);
-  box-shadow:
-    0   -9px  0 2px var(--flower-color),  /* arriba  */
-    0    9px  0 2px var(--flower-color),  /* abajo   */
-   -9px  0    0 2px var(--flower-color),  /* izq     */
-    9px  0    0 2px var(--flower-color);  /* der     */
-}
-
-/* Centro de la flor */
-.flower::after {
   content: '';
   position: absolute;
   inset: 3px;
   border-radius: 50%;
-  background: var(--flower-center);
+  background: var(--flower-color);
+  box-shadow:
+    0  -11px 0 3px var(--flower-color),
+    0   11px 0 3px var(--flower-color),
+   -11px 0   0 3px var(--flower-color),
+    11px 0   0 3px var(--flower-color),
+   -8px -8px 0 2px var(--flower-color),
+    8px -8px 0 2px var(--flower-color),
+   -8px  8px 0 2px var(--flower-color),
+    8px  8px 0 2px var(--flower-color);
+  filter: blur(0.3px);
+}
+
+.flower::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe066, var(--flower-center));
   z-index: 1;
+  box-shadow: 0 0 6px rgba(247,127,0,0.5);
 }
 
 .flower-a { top: -28px; left: -52px; }
@@ -291,20 +347,39 @@
 
 @keyframes flowerBloom {
   0%   { opacity: 0; transform: scale(0) rotate(-90deg); }
-  60%  { opacity: 1; transform: scale(1.15) rotate(10deg); }
+  50%  { opacity: 1; transform: scale(1.25) rotate(5deg); }
+  75%  { transform: scale(0.92) rotate(-3deg); }
   100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
-.flower-a { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.4s; }
-.flower-b { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.7s; }
-.flower-c { animation: flowerBloom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 1.95s; }
+/* Pulso suave de la flor después de aparecer */
+@keyframes flowerPulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50%       { transform: scale(1.08); filter: brightness(1.2); }
+}
+
+.flower-a {
+  animation:
+    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.4s  forwards,
+    flowerPulse 2.2s ease-in-out 2.5s infinite;
+}
+.flower-b {
+  animation:
+    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.7s  forwards,
+    flowerPulse 2.2s ease-in-out 2.8s infinite;
+}
+.flower-c {
+  animation:
+    flowerBloom 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.95s forwards,
+    flowerPulse 2.2s ease-in-out 3.1s infinite;
+}
 
 /* ─── ZARCILLOS ─────────────────────────────────── */
 .tendril {
   position: absolute;
   width: 2px;
   height: 0;
-  background: var(--tendril-color);
+  background: linear-gradient(to top, transparent, var(--tendril-color));
   border-radius: 1px;
   opacity: 0;
 }
@@ -315,23 +390,24 @@
 
 @keyframes growTendril {
   0%   { height: 0; opacity: 0; }
-  30%  { opacity: 0.7; }
-  100% { height: 22px; opacity: 0.6; }
+  30%  { opacity: 0.8; }
+  100% { height: 24px; opacity: 0.5; }
 }
 
-.tendril-1 { animation: growTendril 0.5s ease forwards; animation-delay: 1.55s; }
-.tendril-2 { animation: growTendril 0.5s ease forwards; animation-delay: 1.75s; }
-.tendril-3 { animation: growTendril 0.5s ease forwards; animation-delay: 1.9s;  }
+.tendril-1 { animation: growTendril 0.5s ease 1.55s forwards; }
+.tendril-2 { animation: growTendril 0.5s ease 1.75s forwards; }
+.tendril-3 { animation: growTendril 0.5s ease 1.9s  forwards; }
 
-/* ─── TEXTO Y BARRA DE PROGRESO ─────────────────── */
+/* ─── TEXTO Y BARRA ──────────────────────────────── */
 .loader-text-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  animation: fadeInText 0.6s ease forwards;
-  animation-delay: 0.4s;
+  gap: 0.75rem;
+  animation: fadeInText 0.6s ease 0.4s forwards;
   opacity: 0;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes fadeInText {
@@ -342,64 +418,75 @@
   font-family: 'Syncopate', 'Segoe UI', sans-serif;
   font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--text-color);
   opacity: 0.7;
+  /* Efecto typing */
+  overflow: hidden;
+  white-space: nowrap;
+  animation: fadeInText 0.6s ease 0.4s forwards, typing 1.2s steps(8, end) 0.4s both;
+  width: 0;
 }
 
+@keyframes typing {
+  from { width: 0; }
+  to   { width: 8ch; }
+}
+
+/* Barra de progreso mejorada */
 .loader-bar-track {
-  width: 130px;
-  height: 3px;
+  width: 160px;
+  height: 4px;
   background: var(--bar-bg);
   border-radius: 99px;
   overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(77,255,127,0.1);
 }
 
 .loader-bar-fill {
   height: 100%;
   width: 0%;
-  background: var(--bar-fill);
+  background: linear-gradient(90deg, var(--vine-dark), var(--bar-fill), #a8ffca);
   border-radius: 99px;
-  transition: width 0.25s ease;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 0 8px var(--glow), 0 0 16px rgba(77,255,127,0.2);
+}
+
+/* Brillo deslizante en la barra */
+.loader-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 0;
+  width: 30px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { opacity: 0; transform: translateX(-20px); }
+  50%  { opacity: 1; }
+  to   { opacity: 0; transform: translateX(10px); }
 }
 
 .loader-pct {
   font-family: 'Outfit', 'Segoe UI', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--text-color);
-  opacity: 0.55;
-}
-
-/* También agrego el efecto neon al tallo en tema oscuro */
-[data-theme="dark"] .stem-main,
-.stem-main {
-  box-shadow: 0 0 8px rgba(77, 255, 127, 0.3);
-}
-
-/* ─── CONTENIDO PRINCIPAL ───────────────────────── */
-.main-content {
-  display: none;
-  padding: 4rem 2rem;
-  font-family: 'Outfit', 'Segoe UI', sans-serif;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+  min-width: 3.5ch;
   text-align: center;
-  color: #2d5f35;
-  animation: fadeInMain 0.6s ease both;
-}
-
-.main-content:not([hidden]) {
-  display: block;
-}
-
-@keyframes fadeInMain {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 @media (max-width: 480px) {
   .vine-wrap { width: 90px; height: 210px; }
   .leaf { width: 22px; height: 14px; }
+  .loader-bar-track { width: 130px; }
 }
