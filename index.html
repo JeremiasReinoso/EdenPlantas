@@ -22,49 +22,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 <body>
-  <div class="loader" id="loader" aria-live="polite" aria-label="Cargando sitio">
-    <div class="vine-wrap">
-      <div class="stem stem-main"></div>
-      <div class="branch branch-left-1">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-a leaf-sway"></div>
-        <div class="flower flower-a"></div>
-      </div>
-      <div class="branch branch-right-1">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-b leaf-sway-alt"></div>
-      </div>
-      <div class="branch branch-left-2">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-c leaf-sway"></div>
-        <div class="leaf leaf-d leaf-sway-alt"></div>
-      </div>
-      <div class="branch branch-right-2">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-e leaf-sway"></div>
-        <div class="flower flower-b"></div>
-      </div>
-      <div class="branch branch-left-3">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-f leaf-sway-alt"></div>
-      </div>
-      <div class="branch branch-right-3">
-        <div class="stem stem-branch"></div>
-        <div class="leaf leaf-g leaf-sway"></div>
-        <div class="flower flower-c"></div>
-      </div>
-      <div class="tendril tendril-1"></div>
-      <div class="tendril tendril-2"></div>
-      <div class="tendril tendril-3"></div>
-    </div>
-    <div class="loader-text-wrap">
-      <p class="loader-label">Cargando</p>
-      <div class="loader-bar-track">
-        <div class="loader-bar-fill" id="loaderBar"></div>
-      </div>
-      <span class="loader-pct" id="loaderPct">0%</span>
-    </div>
-  </div>
+
+  <!-- El loader se construye completamente desde loader.js -->
+  <div id="loader" aria-live="polite" aria-label="Cargando sitio Eden Plantas"></div>
 
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
@@ -80,11 +40,6 @@
       <a href="#asesoramiento">Asesoramiento</a>
       <a href="#beneficios">Beneficios</a>
       <a href="#contacto">Contacto</a>
-      <!--
-        ✅ El ícono del carrito (.cart-icon-btn) y el badge (.cart-badge)
-           se inyectan aquí dinámicamente desde cart.js → injectCartUI()
-           justo antes del theme-toggle para mantener el orden visual.
-      -->
       <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
         <span class="toggle-thumb"></span>
       </button>
@@ -115,22 +70,6 @@
 
    <div class="section-divider" aria-hidden="true"></div>
 
-    <!--
-      CATEGORÍAS — Productos
-      ✅ Las tarjetas (.card.media-card) ya son detectadas automáticamente
-         por cart.js → bindProductCards().
-
-      Para personalizar precio y nombre de cada producto, podés agregar
-      atributos data-* a cada <a class="card media-card">:
-
-        data-cart-id="interior-1"       → ID único del producto
-        data-cart-name="Pothos Áureo"   → Nombre que se muestra en el carrito
-        data-cart-price="2500"          → Precio en pesos (sin puntos ni $)
-        data-cart-image="ruta.jpg"      → Imagen alternativa (opcional, ya la detecta sola)
-
-      Si no los agregás, el script usa el texto del <h3> como nombre
-      y $0 como precio (útil mientras definís precios).
-    -->
     <section id="categorias" class="section">
       <div class="container categories-stack">
         <article class="category-block category-interior reveal" id="categoria-interior">
@@ -352,12 +291,12 @@
   </main>
 
   <footer class="site-footer">
-  <p>VIVEROS EL BOLSÓN</p>
-  <div class="footer-links">
-    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-instagram"></i> Instagram</a>
-    <a href="https://wa.me/549244312022" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-  </div>
-</footer>
+    <p>VIVEROS EL BOLSÓN</p>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/549244312022" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </footer>
 
   <script src="app.js"></script>
   <script src="cart.js"></script>
