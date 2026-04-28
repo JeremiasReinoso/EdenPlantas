@@ -11,6 +11,8 @@
   --line: rgba(94, 170, 110, 0.24);
   --neon: #4dff7f;
   --neon-soft: rgba(77, 255, 127, 0.28);
+  --neon-instagram: #ff4fd8;
+  --neon-instagram-soft: rgba(255, 79, 216, 0.28);
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   --radius: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -630,13 +632,61 @@ main {
   transform: translateY(-2px);
 }
 
+.icon-link[href*="instagram"] {
+  border-color: color-mix(in srgb, var(--neon-instagram) 42%, var(--line));
+  background: color-mix(in srgb, var(--neon-instagram) 8%, var(--card));
+}
+
+.icon-link[href*="instagram"]:hover {
+  border-color: var(--neon-instagram);
+  background: color-mix(in srgb, var(--neon-instagram) 18%, var(--card));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-instagram) 42%, transparent), 0 0 24px var(--neon-instagram-soft), 0 0 16px var(--neon-instagram-soft);
+}
+
 .icon-link i {
   font-size: 1rem;
 }
 
-/* ─────────────────────────────────────────────────────────────── */
-/* ANIMACIONES                                                     */
-/* ─────────────────────────────────────────────────────────────── */
+.icon-link[href*="instagram"] i {
+  color: var(--neon-instagram);
+  text-shadow:
+    0 0 8px rgba(255, 79, 216, 0.75),
+    0 0 16px rgba(255, 79, 216, 0.58),
+    0 0 24px rgba(255, 79, 216, 0.4);
+}
+
+.icon-link[href*="instagram"]:hover i {
+  text-shadow:
+    0 0 12px rgba(255, 79, 216, 1),
+    0 0 20px rgba(255, 79, 216, 0.85),
+    0 0 32px rgba(255, 79, 216, 0.6);
+}
+
+.icon-link[href*="whatsapp"] {
+  border-color: color-mix(in srgb, var(--neon) 42%, var(--line));
+  background: color-mix(in srgb, var(--neon) 8%, var(--card));
+}
+
+.icon-link[href*="whatsapp"]:hover {
+  border-color: var(--neon);
+  background: color-mix(in srgb, var(--neon) 18%, var(--card));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon) 42%, transparent), 0 0 24px var(--neon-soft), 0 0 16px var(--neon-soft);
+}
+
+.icon-link[href*="whatsapp"] i {
+  color: var(--neon);
+  text-shadow:
+    0 0 8px rgba(77, 255, 127, 0.75),
+    0 0 16px rgba(77, 255, 127, 0.58),
+    0 0 24px rgba(77, 255, 127, 0.4);
+}
+
+.icon-link[href*="whatsapp"]:hover i {
+  text-shadow:
+    0 0 12px rgba(77, 255, 127, 1),
+    0 0 20px rgba(77, 255, 127, 0.85),
+    0 0 32px rgba(77, 255, 127, 0.6);
+}
 
 @keyframes particleFloat {
   0%, 100% {
