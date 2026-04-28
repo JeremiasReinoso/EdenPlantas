@@ -1,11 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantas para interior</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Plantas para interior - Eden Plantas. Variedades que se adaptan a espacios cerrados con luz natural." />
+  <title>Plantas para Interior - Eden Plantas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../product-pages.css" />
+  <link rel="stylesheet" href="../loader.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
-<body>
-    
+<body data-theme="dark">
+
+  <!-- Loader -->
+  <div id="loader" aria-live="polite" aria-label="Cargando sitio Eden Plantas"></div>
+
+  <!-- Cursor neon -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+      <div class="brand">
+        <div class="brand-mark">🌿</div>
+        <span class="brand-text">Eden Plantas</span>
+      </div>
+    </div>
+    <a href="https://wa.me/542944312022?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20plantas%20de%20interior." target="_blank" rel="noopener noreferrer" class="whatsapp-btn ripple-btn">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+      <div class="hero-bg parallax-layer" data-parallax-speed="0.12" style="background-image: url('https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=2000&q=80');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="hero-content reveal show-on-load">
+        <p class="kicker">Interior</p>
+        <h1>Verdor para tus espacios</h1>
+        <p>
+          Plantas de interior seleccionadas que transforman tus ambientes. Variedades que se adaptan a luz natural y cuidados sencillos, perfectas para livings, oficinas y dormitorios.
+        </p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn btn-primary ripple-btn">Ver catálogo</a>
+          <a href="https://wa.me/542944312022?text=Hola%2C%20quiero%20asesoramiento%20sobre%20plantas%20de%20interior." target="_blank" rel="noopener noreferrer" class="btn btn-ghost ripple-btn">Consultar</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- Grid de Productos -->
+    <section id="productos" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Productos</p>
+          <h2>Nuestra selección de plantas para interior</h2>
+          <p>Especies que prosperan en ambientes cerrados con cuidados mínimos y máxima belleza.</p>
+        </div>
+        <div class="product-grid">
+          <!-- Producto 1 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Pothos">
+            </div>
+            <div class="card-content">
+              <h3>Pothos</h3>
+              <p>La clásica trepadora de interior. Resistente y decorativa, perfecta para principiantes.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$890</p>
+            </div>
+          </a>
+
+          <!-- Producto 2 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Monstera">
+            </div>
+            <div class="card-content">
+              <h3>Monstera Deliciosa</h3>
+              <p>Especie tropical de hojas perforadas. Crece vigorosa y llena cualquier rincón.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$2.500</p>
+            </div>
+          </a>
+
+          <!-- Producto 3 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Sansevieria">
+            </div>
+            <div class="card-content">
+              <h3>Sansevieria (Lengua de Suegra)</h3>
+              <p>Extremadamente resistente. Purifica el aire y tolera poca luz fácilmente.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$1.200</p>
+            </div>
+          </a>
+
+          <!-- Producto 4 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Philodendron">
+            </div>
+            <div class="card-content">
+              <h3>Philodendron</h3>
+              <p>Hojas corazonadas y crecimiento elegante. Adaptable a diferentes condiciones.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$1.500</p>
+            </div>
+          </a>
+
+          <!-- Producto 5 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Calathea">
+            </div>
+            <div class="card-content">
+              <h3>Calathea</h3>
+              <p>Follaje decorativo con patrones únicos. Ideal para espacios con humedad controlada.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$2.100</p>
+            </div>
+          </a>
+
+          <!-- Producto 6 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1545241537-3eb8403fef1f?auto=format&fit=crop&w=500&q=80" alt="Espathiphyllum">
+            </div>
+            <div class="card-content">
+              <h3>Espathiphyllum (Lirio de Paz)</h3>
+              <p>Flores blancas delicadas. Purifica el aire e indica cuándo necesita agua.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$1.800</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- Sección Beneficios -->
+    <section id="beneficios" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Beneficios</p>
+          <h2>Ventajas de las plantas de interior</h2>
+        </div>
+        <div class="benefit-grid">
+          <article class="card benefit-card reveal">
+            <span class="icon">01</span>
+            <h3>Purificación del Aire</h3>
+            <p>Nuestras plantas filtran toxinas y mejoran la calidad del aire que respiras.</p>
+          </article>
+          <article class="card benefit-card reveal">
+            <span class="icon">02</span>
+            <h3>Bienestar Mental</h3>
+            <p>Reduce estrés, aumenta concentración y crea espacios más acogedores y vivos.</p>
+          </article>
+          <article class="card benefit-card reveal">
+            <span class="icon">03</span>
+            <h3>Cuidados Mínimos</h3>
+            <p>Especies resistentes que no requieren mantenimiento complejo ni luz directa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- CTA Final -->
+    <section class="cta-section">
+      <div class="container reveal">
+        <h2>Transforma tu espacio hoy</h2>
+        <p>Consulta con nuestros expertos cuál es la planta ideal para tu ambiente, luz disponible y estilo de vida.</p>
+        <a href="https://wa.me/542944312022?text=Hola%2C%20me%20interesa%20comprar%20plantas%20de%20interior.%20¿Cuál%20me%20recomendarían?" target="_blank" rel="noopener noreferrer" class="btn btn-primary ripple-btn">
+          <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>VIVEROS EL BOLSÓN</p>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/549244312022" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+  <script src="../loader.js"></script>
 </body>
 </html>
