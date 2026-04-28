@@ -633,7 +633,7 @@ main {
 }
 
 .icon-link[href*="instagram"] {
-  border-color: color-mix(in srgb, var(--neon-instagram) 42%, var(--line));
+  border-color: transparent;
   background: color-mix(in srgb, var(--neon-instagram) 8%, var(--card));
 }
 
@@ -663,7 +663,7 @@ main {
 }
 
 .icon-link[href*="whatsapp"] {
-  border-color: color-mix(in srgb, var(--neon) 42%, var(--line));
+  border-color: transparent;
   background: color-mix(in srgb, var(--neon) 8%, var(--card));
 }
 
