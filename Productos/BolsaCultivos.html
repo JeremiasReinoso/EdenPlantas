@@ -1,11 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bolsas para cultivos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bolsas para cultivos - Eden Plantas. Vivero futurista con identidad neon." />
+  <title>Bolsas para Cultivos - Eden Plantas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../product-pages.css" />
+  <link rel="stylesheet" href="../loader.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
-<body>
-    
+<body data-theme="dark">
+
+  <!-- Loader -->
+  <div id="loader" aria-live="polite" aria-label="Cargando sitio Eden Plantas"></div>
+
+  <!-- Cursor neon -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+      <div class="brand">
+        <div class="brand-mark">🌿</div>
+        <span class="brand-text">Eden Plantas</span>
+      </div>
+    </div>
+    <a href="https://wa.me/542944312022?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20Bolsas%20para%20cultivos." target="_blank" rel="noopener noreferrer" class="whatsapp-btn ripple-btn">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+      <div class="hero-bg parallax-layer" data-parallax-speed="0.12" style="background-image: url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=2000&q=80');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="hero-content reveal show-on-load">
+        <p class="kicker">Bolsas de Cultivos</p>
+        <h1>Cultiva con seguridad</h1>
+        <p>
+          Bolsas biodegradables de alta calidad para el crecimiento óptimo de tus plantas. Diseñadas para facilitar el desarrollo radicular y garantizar drenaje perfecto.
+        </p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn btn-primary ripple-btn">Ver catálogo</a>
+          <a href="https://wa.me/542944312022?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20las%20bolsas%20de%20cultivos." target="_blank" rel="noopener noreferrer" class="btn btn-ghost ripple-btn">Consultar</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- Grid de Productos -->
+    <section id="productos" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Productos</p>
+          <h2>Nuestra selección de bolsas de cultivo</h2>
+          <p>Diferentes tamaños y capacidades para adaptarse a tus necesidades de cultivo.</p>
+        </div>
+        <div class="product-grid">
+          <!-- Producto 1 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Bolsa pequeña 5L">
+            </div>
+            <div class="card-content">
+              <h3>Bolsa 5L</h3>
+              <p>Ideal para plantas jóvenes y semilleros. Tamaño compacto perfecto para inicios.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$450</p>
+            </div>
+          </a>
+
+          <!-- Producto 2 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Bolsa mediana 10L">
+            </div>
+            <div class="card-content">
+              <h3>Bolsa 10L</h3>
+              <p>Tamaño versátil para plantas medianas. La más solicitada por cultivadores.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$750</p>
+            </div>
+          </a>
+
+          <!-- Producto 3 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Bolsa grande 20L">
+            </div>
+            <div class="card-content">
+              <h3>Bolsa 20L</h3>
+              <p>Capacidad amplia para cultivos establecidos y plantas grandes.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$1.200</p>
+            </div>
+          </a>
+
+          <!-- Producto 4 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Bolsa extra grande 30L">
+            </div>
+            <div class="card-content">
+              <h3>Bolsa 30L</h3>
+              <p>Tamaño profesional para cultivos a largo plazo y plantas de gran porte.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$1.800</p>
+            </div>
+          </a>
+
+          <!-- Producto 5 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Pack bolsas sortidas">
+            </div>
+            <div class="card-content">
+              <h3>Pack Surtido</h3>
+              <p>Combinación de tamaños para experimentar y encontrar lo ideal.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$3.200</p>
+            </div>
+          </a>
+
+          <!-- Producto 6 -->
+          <a href="#" class="card media-card reveal">
+            <div class="image-placeholder">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" alt="Bolsas eco-friendly">
+            </div>
+            <div class="card-content">
+              <h3>Eco Premium</h3>
+              <p>Bolsas 100% biodegradables con material reforzado de máxima durabilidad.</p>
+              <p style="font-weight: 600; color: var(--neon); margin-top: 0.8rem;">$2.100</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- Sección Beneficios -->
+    <section id="beneficios" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Beneficios</p>
+          <h2>Por qué elegir nuestras bolsas</h2>
+        </div>
+        <div class="benefit-grid">
+          <article class="card benefit-card reveal">
+            <span class="icon">01</span>
+            <h3>Material Premium</h3>
+            <p>Polipropileno tejido de alta densidad que resiste el tiempo y los elementos.</p>
+          </article>
+          <article class="card benefit-card reveal">
+            <span class="icon">02</span>
+            <h3>Drenaje Óptimo</h3>
+            <p>Sistema de perforación precisamente calibrado para máximo drenaje sin fuga de sustrato.</p>
+          </article>
+          <article class="card benefit-card reveal">
+            <span class="icon">03</span>
+            <h3>Biodegradables</h3>
+            <p>Opciones eco-amigables que se descomponen naturalmente sin contaminar el ambiente.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- CTA Final -->
+    <section class="cta-section">
+      <div class="container reveal">
+        <h2>¿Listo para comenzar tu cultivo?</h2>
+        <p>Nuestro equipo está disponible para ayudarte a elegir el tamaño perfecto y resolver todas tus dudas.</p>
+        <a href="https://wa.me/542944312022?text=Hola%2C%20estoy%20interesado%20en%20comprar%20bolsas%20de%20cultivo.%20Me%20gustaría%20conocer%20más%20opciones." target="_blank" rel="noopener noreferrer" class="btn btn-primary ripple-btn">
+          <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>VIVEROS EL BOLSÓN</p>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/549244312022" target="_blank" rel="noopener noreferrer" class="icon-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+  <script src="../loader.js"></script>
 </body>
 </html>
