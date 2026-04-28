@@ -801,20 +801,58 @@ img {
   transform: scale(1.08);
 }
 
+.footer-links .icon-link[href*="instagram"] {
+  border: 1px solid rgba(255, 79, 216, 0.3);
+  background: rgba(255, 79, 216, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-links .icon-link[href*="instagram"]:hover {
+  border-color: #ff4fd8;
+  background: rgba(255, 79, 216, 0.12);
+  box-shadow: 0 0 0 1px rgba(255, 79, 216, 0.4), 0 0 24px rgba(255, 79, 216, 0.3), 0 0 16px rgba(255, 79, 216, 0.2);
+}
+
 .footer-links .icon-link[href*="instagram"] i {
   color: #ff4fd8;
   text-shadow:
-    0 0 6px rgba(255, 79, 216, 0.75),
-    0 0 14px rgba(255, 79, 216, 0.58),
-    0 0 26px rgba(255, 79, 216, 0.46);
+    0 0 8px rgba(255, 79, 216, 0.85),
+    0 0 16px rgba(255, 79, 216, 0.68),
+    0 0 28px rgba(255, 79, 216, 0.5);
+}
+
+.footer-links .icon-link[href*="instagram"]:hover i {
+  text-shadow:
+    0 0 12px rgba(255, 79, 216, 1),
+    0 0 20px rgba(255, 79, 216, 0.8),
+    0 0 32px rgba(255, 79, 216, 0.6);
+}
+
+.footer-links .icon-link[href*="whatsapp"] {
+  border: 1px solid rgba(57, 255, 141, 0.3);
+  background: rgba(57, 255, 141, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-links .icon-link[href*="whatsapp"]:hover {
+  border-color: #39ff8d;
+  background: rgba(57, 255, 141, 0.12);
+  box-shadow: 0 0 0 1px rgba(57, 255, 141, 0.4), 0 0 24px rgba(57, 255, 141, 0.3), 0 0 16px rgba(57, 255, 141, 0.2);
 }
 
 .footer-links .icon-link[href*="whatsapp"] i {
   color: #39ff8d;
   text-shadow:
-    0 0 6px rgba(57, 255, 141, 0.75),
-    0 0 14px rgba(57, 255, 141, 0.58),
-    0 0 26px rgba(57, 255, 141, 0.46);
+    0 0 8px rgba(57, 255, 141, 0.85),
+    0 0 16px rgba(57, 255, 141, 0.68),
+    0 0 28px rgba(57, 255, 141, 0.5);
+}
+
+.footer-links .icon-link[href*="whatsapp"]:hover i {
+  text-shadow:
+    0 0 12px rgba(57, 255, 141, 1),
+    0 0 20px rgba(57, 255, 141, 0.8),
+    0 0 32px rgba(57, 255, 141, 0.6);
 }
 
 .reveal {
