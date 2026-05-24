@@ -161,11 +161,10 @@ function getStoreStatus() {
   const hour = now.getHours();
   const minute = now.getMinutes();
   const totalMinutes = hour * 60 + minute;
-  const isSunday = day === 0;
-  const openStart = isSunday ? 10 * 60 : 9 * 60;
-  const openEnd = isSunday ? 14 * 60 : 19 * 60;
+  const openStart = 10 * 60; // 10:00 am todos los días
+  const openEnd = 20 * 60; // 20:00 (8 pm) todos los días
   const isOpen = totalMinutes >= openStart && totalMinutes < openEnd;
-  return { isOpen, isSunday };
+  return { isOpen };
 }
 
 function renderStoreStatus() {
@@ -173,14 +172,14 @@ function renderStoreStatus() {
   const textEl = storeStatus.querySelector(".status-text");
   if (!textEl) return;
   try {
-    const { isOpen, isSunday } = getStoreStatus();
+    const { isOpen } = getStoreStatus();
     storeStatus.classList.remove("status-open", "status-closed");
     if (isOpen) {
       storeStatus.classList.add("status-open");
-      textEl.textContent = isSunday ? "Abierto ahora - Cierra 14:00" : "Abierto ahora - Cierra 19:00";
+      textEl.textContent = "Abierto ahora - Cierra 20:00";
     } else {
       storeStatus.classList.add("status-closed");
-      textEl.textContent = isSunday ? "Cerrado ahora - Abre 10:00" : "Cerrado ahora - Abre 09:00";
+      textEl.textContent = "Cerrado ahora - Abre 10:00";
     }
   } catch (error) {
     storeStatus.classList.remove("status-open");
