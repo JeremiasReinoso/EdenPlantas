@@ -497,6 +497,17 @@
   color: #1a3a1a;
 }
 
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .cart-panel {
+    width: 100vw;
+  }
+  .cart-panel-header h2 {
+    font-size: 0.85rem;
+  }
+}
+
 
 /* ─── RESPONSIVE ──────────────────────────────────────────── */
 
