@@ -9,11 +9,6 @@
    ============================================================ */
 
 // ─── 1. ESTADO Y PERSISTENCIA ───────────────────────────────
-
-/**
- * Carga el carrito desde localStorage.
- * Si no existe aún, devuelve un array vacío.
- */
 function loadCart() {
   try {
     return JSON.parse(localStorage.getItem("edenCart")) || [];
@@ -202,12 +197,7 @@ function closeCartPanel() {
  * Muestra un pequeño toast de confirmación al agregar un producto.
  */
 function showCartFeedback(name) {
-  let toast = document.getElementById("cartToast");
-  if (!toast) return;
-  toast.textContent = `✓ "${name}" agregado`;
-  toast.classList.add("visible");
-  clearTimeout(toast._timeout);
-  toast._timeout = setTimeout(() => toast.classList.remove("visible"), 2200);
+  // Feedback removed - cart now works without visual feedback
 }
 
 
@@ -281,12 +271,6 @@ function injectCartUI() {
   overlay.id = "cartOverlay";
   overlay.className = "cart-overlay";
   document.body.appendChild(overlay);
-
-  // Toast de feedback
-  const toast = document.createElement("div");
-  toast.id = "cartToast";
-  toast.className = "cart-toast";
-  document.body.appendChild(toast);
 }
 
 
@@ -348,59 +332,7 @@ function buildWhatsappMessage() {
 }
 
 
-// ─── 6. CONECTAR TARJETAS EXISTENTES ────────────────────────
-
-/**
- * Agrega el botón "Agregar al carrito" a cada .card existente en el sitio.
- * Los datos del producto se leen de los atributos data-* de la tarjeta,
- * o se infieren del contenido del DOM si no están presentes.
- */
-function bindProductCards() {
-  document.querySelectorAll(".category-grid .card.media-card").forEach((card, index) => {
-    // Evitar procesar dos veces
-    if (card.dataset.cartBound) return;
-    card.dataset.cartBound = "true";
-
-    // Leer o inferir datos del producto
-    const nameEl = card.querySelector("h3");
-    const imgEl  = card.querySelector("img");
-
-    const product = {
-      id:    card.dataset.cartId    || `card-${index}`,
-      name:  card.dataset.cartName  || nameEl?.textContent?.trim() || `Producto ${index + 1}`,
-      price: parseInt(card.dataset.cartPrice) || 0,
-      image: card.dataset.cartImage || imgEl?.src || null,
-    };
-
-    // Crear botón "Agregar"
-    const addBtn = document.createElement("button");
-    addBtn.className = "card-add-btn ripple-btn";
-    addBtn.setAttribute("aria-label", `Agregar ${product.name} al carrito`);
-    addBtn.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-      Agregar
-    `;
-
-    addBtn.addEventListener("click", e => {
-      e.preventDefault(); // evitar seguir el href del <a>
-      e.stopPropagation();
-      addToCart(product);
-
-      // Animación visual de feedback en el botón
-      addBtn.classList.add("added");
-      setTimeout(() => addBtn.classList.remove("added"), 700);
-    });
-
-    // Insertar el botón dentro del card-content
-    const cardContent = card.querySelector(".card-content");
-    if (cardContent) cardContent.appendChild(addBtn);
-  });
-}
-
-
-// ─── 7. INICIALIZACIÓN ──────────────────────────────────────
+// ─── 6. INICIALIZACIÓN ──────────────────────────────────────
 
 /**
  * Punto de entrada principal.
@@ -409,8 +341,7 @@ function bindProductCards() {
 function initCart() {
   injectCartUI();
   bindCartEvents();
-  bindProductCards();
-  updateCartUI(); // Renderiza estado inicial desde localStorage
+  updateCartUI();
 }
 
 if (document.readyState === "loading") {
