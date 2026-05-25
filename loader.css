@@ -75,6 +75,7 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 0 40px var(--glow), 0 0 100px var(--glowf), inset 0 0 30px var(--glowf);
   animation: emblemPulse 4s ease-in-out infinite;
+  overflow: hidden;
 }
 @keyframes emblemPulse {
   0%,100% { box-shadow: 0 0 30px var(--glow), 0 0 70px var(--glowf); }
