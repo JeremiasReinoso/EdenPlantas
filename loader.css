@@ -64,8 +64,8 @@
 
 /* Círculo emblema - logo ocupa todo el espacio */
 .ldr-emblem {
-  width: 180px;
-  height: 180px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@
 .ldr-emblem::before {
   content: '';
   position: absolute;
-  inset: -12px;
+  inset: -10px;
   border-radius: 50%;
   border: 2px solid transparent;
   border-top-color: var(--vc);
@@ -97,7 +97,7 @@
 .ldr-emblem::after {
   content: '';
   position: absolute;
-  inset: -22px;
+  inset: -20px;
   border-radius: 50%;
   border: 1.5px dashed rgba(61,218,102,0.22);
   animation: spin 9s linear infinite reverse;
@@ -106,8 +106,8 @@
 
 /* ── LOGO OCUPA TODO EL CÍRCULO ── */
 .ldr-logo-img {
-  width: 160px;
-  height: 160px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
@@ -132,8 +132,8 @@
 /* Resplandor ambiental debajo del logo */
 .ldr-glow-ring {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(61,218,102,0.25) 0%, transparent 70%);
   animation: glowBreath 4s ease-in-out infinite;
@@ -225,7 +225,7 @@
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 480px) {
-  .ldr-emblem      { width: 140px; height: 140px; }
-  .ldr-logo-img    { width: 110px; height: 110px; }
+  .ldr-emblem      { width: 130px; height: 130px; }
+  .ldr-logo-img    { width: 130px; height: 130px; }
   .ldr-bar-track   { width: 140px; }
 }
