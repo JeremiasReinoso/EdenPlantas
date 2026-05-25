@@ -16,7 +16,7 @@ const storeStatus = document.querySelector("#storeStatus");
 document.documentElement.setAttribute("data-theme", "dark");
 localStorage.setItem("theme", "dark");
 
-// Menu movil
+// Menu Celular
 if (menuBtn && mainNav) {
   menuBtn.addEventListener("click", () => {
     const isOpen = mainNav.classList.toggle("is-open");
