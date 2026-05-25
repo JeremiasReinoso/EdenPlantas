@@ -32,7 +32,7 @@
   }
   function animPct() {
     if (cur < tar) {
-      setPct(cur + Math.max(0.4, (tar - cur) * 0.07));
+      setPct(cur + Math.max(0.3, (tar - cur) * 0.06));
       raf = requestAnimationFrame(animPct);
     }
   }
@@ -42,12 +42,12 @@
     raf = requestAnimationFrame(animPct);
   }
 
-  const milestones = [10, 22, 35, 50, 63, 76, 87, 92];
+  const milestones = [5, 15, 28, 42, 55, 68, 80, 88, 94];
   let mi = 0;
   function tick() {
     if (mi >= milestones.length) return;
     advanceTo(milestones[mi++]);
-    if (mi < milestones.length) setTimeout(tick, 230 + Math.random() * 220);
+    if (mi < milestones.length) setTimeout(tick, 180 + Math.random() * 150);
   }
 
   /* ── CIERRE ───────────────────────────────────────── */
@@ -110,18 +110,20 @@
       return p;
     }
 
-    function leaf(cx, cy, angle, size, flip, delay) {
+    function leaf(cx, cy, angle, size, flip, delay, type) {
       const g = svgEl('g', {
         class: 'vl',
         transform: `translate(${cx},${cy}) rotate(${angle}) scale(${flip?-1:1},1)`,
       });
       const s = size;
       const body = svgEl('path', {
-        d: `M0,0 C${s*0.25},${-s*0.75} ${s*1.05},${-s*0.65} ${s*1.35},0 C${s*1.05},${s*0.65} ${s*0.25},${s*0.75} 0,0`,
+        d: type === 'heart' 
+          ? `M0,0 C${s*0.3},${-s*0.6} ${s*0.9},-${s*0.2} ${s*0.3},0 C${s*0.9},${s*0.2} ${s*0.3},${s*0.6} 0,0`
+          : `M0,0 C${s*0.25},${-s*0.75} ${s*1.05},${-s*0.65} ${s*1.35},0 C${s*1.05},${s*0.65} ${s*0.25},${s*0.75} 0,0`,
         fill: vc, stroke: vd, 'stroke-width':'0.8', opacity:'0.92',
       });
       const vein = svgEl('path', {
-        d:`M0,0 L${s*1.1},0`, fill:'none', stroke:vd, 'stroke-width':'0.7', opacity:'0.55',
+        d:`M0,0 L0,${s*0.8}`, fill:'none', stroke:vd, 'stroke-width':'0.7', opacity:'0.55',
       });
       const shine = svgEl('ellipse', {
         cx:s*0.35, cy:-s*0.24, rx:s*0.2, ry:s*0.11, fill:ll, opacity:'0.38',
@@ -132,17 +134,18 @@
       return g;
     }
 
-    function flower(cx, cy, size, delay, isLast) {
+    function flower(cx, cy, size, delay, isLast, type) {
       const g = svgEl('g', { class:'vf', transform:`translate(${cx},${cy})` });
       if (isLast) g.id = 'last-flower';
-      const petals = 7;
+      const petals = type === 'double' ? 12 : 7;
+      const colors = [fc, '#ff6b6b', '#ffd93d', '#6bcb77'];
       for (let i = 0; i < petals; i++) {
         const a = (360/petals)*i * Math.PI/180;
         const px = Math.cos(a)*size*1.05, py = Math.sin(a)*size*1.05;
         const pe = svgEl('ellipse', {
           cx:px, cy:py, rx:size*0.62, ry:size*0.38,
           transform:`rotate(${(360/petals)*i},${px},${py})`,
-          fill:fc, opacity:'0.93',
+          fill: colors[i % colors.length], opacity:'0.93',
         });
         g.appendChild(pe);
       }
@@ -178,6 +181,25 @@
       }, delay);
     }
 
+    function decorativeLeaf(cx, cy, size, delay) {
+      const g = svgEl('g', {
+        class: 'vl',
+        transform: `translate(${cx},${cy})`,
+      });
+      const s = size;
+      const body = svgEl('path', {
+        d: `M0,0 C${s*0.3},${-s*0.6} ${s*0.9},-${s*0.2} ${s*0.3},0 C${s*0.9},${s*0.2} ${s*0.3},${s*0.6} 0,0`,
+        fill: vc, stroke: vd, 'stroke-width':'0.6', opacity:'0.7',
+      });
+      const vein = svgEl('path', {
+        d:`M0,0 L0,${s*0.7}`, fill:'none', stroke:vd, 'stroke-width':'0.5', opacity:'0.4',
+      });
+      g.appendChild(body); g.appendChild(vein);
+      svg.appendChild(g);
+      setTimeout(() => g.classList.add('on'), delay);
+      return g;
+    }
+
     stem(`M-5,${H+5} C40,${H*0.88} 70,${H*0.72} 95,${H*0.55}
           C118,${H*0.40} 80,${H*0.25} 110,${H*0.12}
           C130,${H*0.04} 170,0 200,-5`,
@@ -201,38 +223,38 @@
       3, 700, 1800, 0.7);
 
     const leftBranches = [
-      { cx:88,  cy:H*0.52, dx:55,  dy:-60, delay:900  },
-      { cx:97,  cy:H*0.38, dx:-60, dy:-50, delay:1100 },
-      { cx:106, cy:H*0.24, dx:65,  dy:-45, delay:1300 },
-      { cx:80,  cy:H*0.64, dx:-55, dy:-55, delay:750  },
-      { cx:115, cy:H*0.14, dx:-50, dy:-38, delay:1480 },
+      { cx:88,  cy:H*0.52, dx:55,  dy:-60, delay:900, type:'a' },
+      { cx:97,  cy:H*0.38, dx:-60, dy:-50, delay:1100, type:'b' },
+      { cx:106, cy:H*0.24, dx:65,  dy:-45, delay:1300, type:'c' },
+      { cx:80,  cy:H*0.64, dx:-55, dy:-55, delay:750, type:'d' },
+      { cx:115, cy:H*0.14, dx:-50, dy:-38, delay:1480, type:'e' },
     ];
-    leftBranches.forEach(({cx,cy,dx,dy,delay}, i) => {
+    leftBranches.forEach(({cx,cy,dx,dy,delay,type}, i) => {
       const ex = cx+dx, ey = cy+dy;
       stem(`M${cx},${cy} C${cx+dx*0.35},${cy+dy*0.25} ${cx+dx*0.75},${cy+dy*0.7} ${ex},${ey}`,
         2, delay, 550);
       const ang = Math.atan2(dy,dx)*180/Math.PI;
       leaf(ex, ey, ang-28, 17+rnd(-2,4), false, delay+520);
       leaf(ex, ey, ang+32, 14+rnd(-2,3), true,  delay+660);
-      if (i % 2 === 0) flower(ex+(dx>0?22:-22), ey-16, 8+rnd(0,3), delay+900, false);
+      if (i % 2 === 0) flower(ex+(dx>0?22:-22), ey-16, 8+rnd(0,3), delay+900, false, 'double');
       curl(ex-10, ey-10, delay+700);
     });
 
     const rightBranches = [
-      { cx:W-88,  cy:H*0.52, dx:-55, dy:-60, delay:1000 },
-      { cx:W-97,  cy:H*0.38, dx:60,  dy:-50, delay:1200 },
-      { cx:W-106, cy:H*0.24, dx:-65, dy:-45, delay:1400 },
-      { cx:W-80,  cy:H*0.64, dx:55,  dy:-55, delay:820  },
-      { cx:W-115, cy:H*0.14, dx:50,  dy:-38, delay:1560 },
+      { cx:W-88,  cy:H*0.52, dx:-55, dy:-60, delay:1000, type:'a' },
+      { cx:W-97,  cy:H*0.38, dx:60,  dy:-50, delay:1200, type:'b' },
+      { cx:W-106, cy:H*0.24, dx:-65, dy:-45, delay:1400, type:'c' },
+      { cx:W-80,  cy:H*0.64, dx:55,  dy:-55, delay:820, type:'d' },
+      { cx:W-115, cy:H*0.14, dx:50,  dy:-38, delay:1560, type:'e' },
     ];
-    rightBranches.forEach(({cx,cy,dx,dy,delay}, i) => {
+    rightBranches.forEach(({cx,cy,dx,dy,delay,type}, i) => {
       const ex = cx+dx, ey = cy+dy;
       stem(`M${cx},${cy} C${cx+dx*0.35},${cy+dy*0.25} ${cx+dx*0.75},${cy+dy*0.7} ${ex},${ey}`,
         2, delay, 550);
       const ang = Math.atan2(dy,dx)*180/Math.PI;
       leaf(ex, ey, ang-28, 17+rnd(-2,4), false, delay+520);
       leaf(ex, ey, ang+32, 14+rnd(-2,3), true,  delay+660);
-      if (i % 2 === 0) flower(ex+(dx>0?22:-22), ey-16, 8+rnd(0,3), delay+900, false);
+      if (i % 2 === 0) flower(ex+(dx>0?22:-22), ey-16, 8+rnd(0,3), delay+900, false, 'double');
       curl(ex+10, ey-10, delay+700);
     });
 
@@ -254,24 +276,45 @@
         });
         svg.appendChild(hang);
         drawPath(hang, 150, 400, delay + 600 + i*70);
-        leaf(lx+8, y+48, 70+rnd(-15,15), 12+rnd(-2,3), i%2===0, delay+950+i*70);
+        leaf(lx+8, y+48, 70+rnd(-15,15), 12+rnd(-2,3), i%2===0, delay+950+i*70, 'heart');
       }
     });
 
-    flower(170,  H*0.10, 11, 1900, false);
-    flower(W-165,H*0.10, 10, 2000, false);
+    flower(170,  H*0.10, 11, 1900, false, 'double');
+    flower(W-165,H*0.10, 10, 2000, false, 'double');
     flower(110,  H*0.76, 10, 1600, false);
     flower(W-110,H*0.76, 10, 1700, false);
 
-    flower(W/2, H*0.5-80, 13, 2400, true);
+    flower(W/2-60, H*0.22, 9, 2100, false);
+    flower(W/2+60, H*0.22, 9, 2150, false);
+
+    flower(W/2, H*0.5-80, 15, 2400, true, 'double');
+
+    for (let r = 0; r < 3; r++) {
+      const rootY = H * (0.85 + r * 0.08);
+      stem(`M${W/2-40},${rootY} C${W/2-20},${rootY+20} ${W/2+20},${rootY+20} ${W/2+40},${rootY}`,
+        2.2, 800 + r*300, 1200 + r*400, 0.4);
+    }
+
+    for (let i = 0; i < 8; i++) {
+      const lx = 30 + i * 45;
+      const ly = H * (0.15 + Math.sin(i * 0.5) * 0.1);
+      decorativeLeaf(lx, ly, 10 + rnd(-2,3), 1000 + i * 150);
+    }
+    for (let i = 0; i < 8; i++) {
+      const rx = W - 30 - i * 45;
+      const ry = H * (0.2 + Math.cos(i * 0.5) * 0.12);
+      decorativeLeaf(rx, ry, 10 + rnd(-2,3), 1100 + i * 150);
+    }
 
     const sporeData = [
-      {l:'7%', w:3,dur:7,del:0.4},{l:'19%',w:2,dur:9,del:1.1},
-      {l:'31%',w:3,dur:6,del:0.7},{l:'46%',w:2,dur:11,del:0.2},
-      {l:'57%',w:3,dur:8,del:1.7},{l:'70%',w:2,dur:10,del:0.5},
-      {l:'83%',w:3,dur:7,del:1.3},{l:'91%',w:2,dur:9,del:0.3},
-      {l:'24%',w:2,dur:13,del:2 },{l:'75%',w:3,dur:11,del:0.8},
-      {l:'50%',w:2,dur:8, del:3 },{l:'63%',w:3,dur:10,del:1.4},
+      {l:'5%', w:2,dur:6,del:0.3},{l:'12%', w:1.5,dur:7,del:0.8},
+      {l:'22%', w:2,dur:5,del:0.5},{l:'35%', w:1.8,dur:8,del:0.1},
+      {l:'45%', w:2.2,dur:6,del:1.2},{l:'58%', w:1.5,dur:9,del:0.6},
+      {l:'68%', w:2,dur:7,del:1.4},{l:'78%', w:1.8,dur:8,del:0.2},
+      {l:'85%', w:2.5,dur:6,del:0.9},{l:'93%', w:2,dur:10,del:1.1},
+      {l:'30%', w:1.3,dur:12,del:1.8},{l:'55%', w:1.6,dur:11,del:0.4},
+      {l:'80%', w:1.4,dur:9, del:2.2},{l:'42%', w:2,dur:8,del:1.6},
     ];
     sporeData.forEach(({l,w,dur,del}) => {
       const s = document.createElement('div');
@@ -284,7 +327,7 @@
       loader.appendChild(s);
     });
 
-    setTimeout(() => { animDone = true; finish(); }, 4200);
+    setTimeout(() => { animDone = true; finish(); }, 4500);
   }
 
   /* ════════════════════════════════════════════════════
